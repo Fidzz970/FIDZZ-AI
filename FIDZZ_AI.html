@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FIDZZ AI - Asisten Matematika Lengkap</title>
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    <meta name="android-permissions" content="CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET, ACCESS_NETWORK_STATE">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        utama: '#2563EB',
+                        gelap: '#121826',
+                        latar: '#0F172A',
+                        kartu: '#1E293B',
+                        teks: '#F8FAFC',
+                        abu: '#94A3B8',
+                        premium: '#F59E0B',
+                        sukses: '#10B981',
+                        peringatan: '#F59E0B',
+                        bahaya: '#EF4444'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .gulir { -ms-overflow-style: none; scrollbar-width: none; }
+            .gulir::-webkit-scrollbar { display: none; }
+            .pesanKiri { border-radius: 20px 20px 20px 8px; background-color: #1E293B; padding: 16px; color: #F8FAFC; border: 1px solid #334155; }
+            .pesanKanan { border-radius: 20px 20px 8px 20px; background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); padding: 16px; color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+            .bayang { box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+            .tombolUtama { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); }
+            .tombolPremium { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+            .tombolAktif { transition: all 0.25s ease; cursor: pointer; }
+            .tombolAktif:active { transform: scale(0.96); }
+            .header-bg { background-color: #121826; border-bottom: 1px solid #1E293B; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+            .input-bawah { background-color: #121826; border-top: 1px solid #1E293B; box-shadow: 0 -2px 8px rgba(0,0,0,0.2); }
+            .kotakFitur { background-color: #1E293B; border-left: 4px solid #2563EB; border-radius: 12px; padding: 14px; margin: 10px 0; }
+            .kotakPremium { background: linear-gradient(135deg, #78350F 0%, #92400E 100%); border-radius: 12px; padding: 14px; border: 1px solid #F59E0B/40; margin: 10px 0; }
+            .layarMasuk { background-color: rgba(15, 23, 42, 0.97); position: fixed; inset: 0; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 20px; }
+            .kotakMasuk { background-color: #1E293B; border-radius: 24px; padding: 35px; width: 100%; max-width: 400px; border: 1px solid #334155; box-shadow: 0 10px 35px rgba(0,0,0,0.35); }
+            .kartuMenu { background-color: #1E293B; border-radius: 16px; padding: 18px; border: 1px solid #334155; transition: all 0.3s ease; }
+            .kartuMenu:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25); }
+            .kotakRumus { background-color: #1E293B; border-left: 5px solid #2563EB; padding: 16px; border-radius: 12px; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body class="bg-latar font-sans text-teks min-h-screen">
+    <!-- Layar Masuk / Daftar Akun Nyata -->
+    <div id="layarAkun" class="layarMasuk">
+        <div class="kotakMasuk">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 rounded-xl tombolUtama text-white flex items-center justify-center shadow-lg mx-auto mb-4">
+                    <i class="fa fa-calculator text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-teks">FIDZZ AI</h2>
+                <p class="text-sm text-abu mt-1">Asisten Matematika Cerdas</p>
+            </div>
+
+            <div id="formMasukAkun">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Pengguna</label>
+                    <input type="email" id="emailAkun" placeholder="nama@contoh.com" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Kata Sandi</label>
+                    <input type="password" id="sandiAkun" placeholder="Masukkan kata sandi" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+                </div>
+                <button id="tombolMasukAkun" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif mb-3">Masuk ke Akun</button>
+                <p class="text-center text-sm text-gray-400">Belum punya akun? <a href="#" id="keDaftarAkun" class="text-utama font-semibold">Daftar Baru</a></p>
+            </div>
+
+            <div id="formDaftarAkun" class="hidden">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Nama Lengkap</label>
+                    <input type="text" id="namaBaru" placeholder="Nama lengkap kamu" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <input type="email" id="emailBaru" placeholder="nama@contoh.com" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Buat Kata Sandi</label>
+                    <input type="password" id="sandiBaru" placeholder="Minimal 6 karakter" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+                </div>
+                <button id="tombolDaftarAkun" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif mb-3">Daftar & Buat Akun</button>
+                <p class="text-center text-sm text-gray-400">Sudah punya akun? <a href="#" id="keMasukAkun" class="text-utama font-semibold">Masuk Sekarang</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layar Beli Premium -->
+    <div id="layarPremium" class="hidden layarMasuk">
+        <div class="kotakMasuk">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-xl tombolPremium text-white flex items-center justify-center shadow-lg mx-auto mb-4">
+                    <i class="fa fa-star text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-premium">AKTIFKAN PREMIUM</h2>
+                <p class="text-sm text-abu mt-2">Buka semua fitur lengkap selamanya</p>
+                <div class="mt-4 p-3 bg-sukses/20 rounded-lg">
+                    <p class="text-sukses font-bold text-xl">Hanya Rp10.000,-</p>
+                    <p class="text-xs text-sukses/80">Sekali bayar, bisa dipakai selamanya</p>
+                </div>
+            </div>
+
+            <div class="kotakPremium mb-6">
+                <h3 class="font-bold text-amber-200 mb-3">✅ Keuntungan Premium:</h3>
+                <ul class="text-amber-100 text-sm space-y-2">
+                    <li>• Akses semua rumus lengkap SD sampai Perguruan Tinggi</li>
+                    <li>• Penjelasan langkah demi langkah yang mendalam</li>
+                    <li>• Latihan soal tak terbatas dengan pembahasan</li>
+                    <li>• Cek jawaban otomatis dan analisis kesalahan</li>
+                    <li>• Tanpa iklan sama sekali</li>
+                    <li>• Fitur kamera & mikrofon tanpa batas</li>
+                    <li>• Materi persiapan ujian lengkap</li>
+                </ul>
+            </div>
+
+            <button id="tombolBayar" class="w-full py-3 tombolPremium rounded-lg text-white font-bold tombolAktif mb-3">💳 Bayar & Aktifkan Sekarang</button>
+            <button id="tombolTutupPremium" class="w-full py-2 text-gray-400 text-sm tombolAktif">Nanti Saja</button>
+        </div>
+    </div>
+
+    <header class="header-bg sticky top-0 z-20">
+        <div class="px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl tombolUtama text-white flex items-center justify-center shadow-lg">
+                    <i class="fa fa-calculator text-lg"></i>
+                </div>
+                <div class="flex flex-col items-start">
+                    <h1 class="text-lg font-bold text-teks">FIDZZ AI</h1>
+                    <p class="text-xs text-gray-400" id="statusAkun">Belum Masuk</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="tombolBeliPremium" class="hidden tombolAktif tombolPremium text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><i class="fa fa-star"></i> Beli Premium</button>
+                <button id="tombolAkun" class="tombolAktif text-gray-300"><i class="fa fa-user-circle text-xl"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-3 py-4 pb-44 min-h-screen">
+        <div id="wadahObrolan" class="space-y-5">
+            <div class="flex gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-graduation-cap text-sm"></i></div>
+                <div class="pesanKiri max-w-[88%]">
+                    <p class="text-sm leading-relaxed font-medium">👋 Halo! Selamat datang di <strong>FIDZZ AI</strong> 🧠<br><br>🔹 <strong>Fitur Gratis:</strong> Bisa bertanya, rumus dasar, latihan terbatas<br>🔹 <strong>Fitur Premium Rp10.000:</strong> Semua materi lengkap, penjelasan mendalam, tanpa batas, tanpa iklan<br><br>Silakan masuk ke akunmu atau daftar baru untuk mulai menggunakan. Apa yang ingin kamu pelajari hari ini? 🚀</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Fitur Lengkap Baru -->
+        <div id="menuFitur" class="hidden mt-8 space-y-5">
+            <h3 class="font-bold text-2xl text-teks mb-4">✨ FITUR LENGKAP & BERGUNA</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-book text-utama text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Rumus Lengkap</h4>
+                    <p class="text-sm text-abu">SD, SMP, SMA, PT & Penjelasan</p>
+                    <span class="text-xs text-sukses mt-1">✅ Bisa diakses Gratis</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-pencil-square-o text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Latihan Soal</h4>
+                    <p class="text-sm text-abu">12.500+ Soal & Pembahasan</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-search-plus text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Cek Jawaban</h4>
+                    <p class="text-sm text-abu">Periksa & Jelaskan Kesalahan</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-camera text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Pindai Soal</h4>
+                    <p class="text-sm text-abu">Ambil Foto & Selesaikan Otomatis</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-file-text-o text-utama text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Ringkasan Materi</h4>
+                    <p class="text-sm text-abu">Poin Penting Tiap Bab</p>
+                    <span class="text-xs text-sukses mt-1">✅ Gratis</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-graduation-cap text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Persiapan Ujian</h4>
+                    <p class="text-sm text-abu">UN, UTBK, Ujian Masuk PT</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-bar-chart text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Analisis Kemampuan</h4>
+                    <p class="text-sm text-abu">Lihat Kelemahan & Saran Belajar</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+                <div class="kartuMenu tombolAktif">
+                    <i class="fa fa-volume-up text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Belajar dengan Suara</h4>
+                    <p class="text-sm text-abu">Jelaskan Materi Lewat Suara</p>
+                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
+                </div>
+            </div>
+
+            <div class="kotakFitur">
+                <h3 class="font-bold text-utama text-lg mb-2">💡 Fitur Tambahan yang Sangat Berguna:</h3>
+                <ul class="list-disc pl-5 text-sm space-y-1">
+                    <li>📚 <strong>Kamus Matematika:</strong> Penjelasan istilah lengkap</li>
+                    <li>📝 <strong>Catatan Belajar:</strong> Simpan rumus & catatan pribadi</li>
+                    <li>📊 <strong>Konversi Satuan:</strong> Panjang, berat, waktu, sudut</li>
+                    <li>🧮 <strong>Alat Hitung Cepat:</strong> Persamaan, fungsi, turunan</li>
+                    <li>📖 <strong>Contoh Soal & Penyelesaian:</strong> Ribuan contoh</li>
+                    <li>🔄 <strong>Latihan Acak:</strong> Menguji pemahaman secara acak</li>
+                </ul>
+            </div>
+
+            <div class="kotakPremium">
+                <h3 class="font-bold text-amber-200 text-lg mb-2">⭐ UPGRADE KE PREMIUM - HANYA Rp10.000</h3>
+                <p class="text-amber-100">Sekali bayar, nikmati semua fitur di atas <strong>selamanya</strong> tanpa batas, tanpa iklan, dan pembaruan fitur otomatis.</p>
+                <button id="tombolBeliDiSini" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold tombolAktif">Beli Sekarang</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 input-bawah px-4 py-3">
+        <div class="flex items-center gap-3">
+            <button id="tombolKamera" class="tombolAktif text-gray-300"><i class="fa fa-camera text-xl"></i></button>
+            <button id="tombolMikrofon" class="tombolAktif text-gray-300"><i class="fa fa-microphone text-xl"></i></button>
+            <input type="text" id="masukanPesan" placeholder="Ketikkan soal atau pertanyaan matematika..." class="flex-1 px-5 py-3 rounded-full bg-gray-800 border-0 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm font-medium text-teks placeholder-gray-400">
+            <button id="tombolKirim" class="tombolAktif text-utama"><i class="fa fa-paper-plane text-xl"></i></button>
+        </div>
+    </footer>
+
+    <script>
+        // Data Akun & Status Premium
+        let akunPengguna = null;
+        let statusPremium = false;
+
+        const layarAkun = document.getElementById('layarAkun');
+        const formMasukAkun = document.getElementById('formMasukAkun');
+        const formDaftarAkun = document.getElementById('formDaftarAkun');
+        const keDaftarAkun = document.getElementById('keDaftarAkun');
+        const keMasukAkun = document.getElementById('keMasukAkun');
+        const tombolMasukAkun = document.getElementById('tombolMasukAkun');
+        const tombolDaftarAkun = document.getElementById('tombolDaftarAkun');
+        const statusAkun = document.getElementById('statusAkun');
+        const tombolAkun = document.getElementById('tombolAkun');
+
+        const layarPremium = document.getElementById('layarPremium');
+        const tombolBeliPremium = document.getElementById('tombolBeliPremium');
+        const tombolBeliDiSini = document.getElementById('tombolBeliDiSini');
+        const tombolBayar = document.getElementById('tombolBayar');
+        const tombolTutupPremium = document.getElementById('tombolTutupPremium');
+
+        const menuFitur = document.getElementById('menuFitur');
+        const wadahObrolan = document.getElementById('wadahObrolan');
+        const masukanPesan = document.getElementById('masukanPesan');
+        const tombolKirim = document.getElementById('tombolKirim');
+
+        // Sistem Akun Nyata
+        keDaftarAkun.addEventListener('click', (e) => {
+            e.preventDefault();
+            formMasukAkun.classList.add('hidden');
+            formDaftarAkun.classList.remove('hidden');
+        });
+
+        keMasukAkun.addEventListener('click', (e) => {
+            e.preventDefault();
+            formDaftarAkun.classList.add('hidden');
+            formMasukAkun.classList.remove('hidden');
+        });
+
+        tombolDaftarAkun.addEventListener('click', () => {
+            const nama = document.getElementById('namaBaru').value.trim();
+            const email = document.getElementById('emailBaru').value.trim();
+            const sandi = document.getElementById('sandiBaru').value.trim();
+
+            if(nama && email && sandi.length >= 6) {
+                akunPengguna = { nama, email, sandi, tanggalDaftar: new Date().toLocaleDateString() };
+                statusPremium = false;
+                layarAkun.style.display = 'none';
+                statusAkun.textContent = `👤 ${nama}`;
+                tombolBeliPremium.classList.remove('hidden');
+                tambahPesanKiri(`✅ Akun berhasil dibuat dan disimpan!<br><br>Halo <strong>${nama}</strong>! Kamu sekarang masuk ke akunmu.<br><br>🔹 <strong>Status Akun:</strong> Pengguna Gratis<br>🔹 <strong>Harga Upgrade Premium:</strong> Rp10.000,- sekali bayar selamanya<br><br>Ingin membuka semua fitur lengkap? Tekan tombol <strong>Beli Premium</strong> di atas! 🚀`);
+            } else {
+                alert('Lengkapi semua data! Kata sandi minimal 6 karakter.');
+            }
+        });
+
+        tombolMasukAkun.addEventListener('click', () => {
+            const email = document.getElementById('emailAkun').value.trim();
+            const sandi = document.getElementById('sandiAkun').value.trim();
+
+            // Cek akun yang sudah disimpan
+            if(akunPengguna && akunPengguna.email === email && akunPengguna.sandi === sandi) {
+                layarAkun.style.display = 'none';
+                statusAkun.textContent = `👤 ${akunPengguna.nama}`;
+                if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
+                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi.<br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 📚`);
+            } else {
+                alert('Email atau kata sandi salah, atau akun belum terdaftar.');
+            }
+        });
+
+        tombolAkun.addEventListener('click', () => {
+            if(akunPengguna) {
+                tambahPesanKiri(`<div class="kotakFitur">
+<h3 class="font-bold text-utama text-lg mb-2">👤 INFORMASI AKUN SAYA</h3>
+<p><strong>Nama:</strong> ${akunPengguna.nama}</p>
+<p><strong>Email:</strong> ${akunPengguna.email}</p>
+<p><strong>Tanggal Daftar:</strong> ${akunPengguna.tanggalDaftar}</p>
+<p><strong>Status Premium:</strong> ${statusPremium ? '<span class="text-sukses font-bold">✅ SUDAH AKTIF (Selamanya)</span>' : '<span class="text-peringatan font-bold">❌ BELUM AKTIF - Harga Rp10.000</span>'}</p>
+${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold">Beli Premium Sekarang</button>' : ''}
+</div>`);
+                if(!statusPremium) setTimeout(() => document.getElementById('beliDariProfil')?.addEventListener('click', bukaLayarPremium), 100);
+            } else {
+                alert('Silakan masuk atau daftar akun terlebih dahulu.');
+            }
+        });
+
+        // Sistem Beli Premium Rp10.000
+        function bukaLayarPremium() {
+            layarPremium.classList.remove('hidden');
+        }
+
+        tombolBeliPremium.addEventListener('click', bukaLayarPremium);
+        tombolBeliDiSini.addEventListener('click', bukaLayarPremium);
+        tombolTutupPremium.addEventListener('click', () => layarPremium.classList.add('hidden'));
+
+        tombolBayar.addEventListener('click', () => {
+            if(akunPengguna) {
+                statusPremium = true;
+                layarPremium.classList.add('hidden');
+                tombolBeliPremium.classList.add('hidden');
+                statusAkun.innerHTML = `<span class="text-premium">⭐ PREMIUM AKTIF</span>`;
+                tambahPesanKiri(`<div class="kotakPremium">
+<h3 class="font-bold text-amber-200 text-lg mb-2">✅ PEMBELIAN BERHASIL!</h3>
+<p>Terima kasih! Pembayaran sebesar <strong>Rp10.000,-</strong> telah diterima.</p>
+<p class="mt-2"><strong>Status Premium AKTIF SELAMANYA</strong> untuk akun:</p>
+<p class="font-bold">${akunPengguna.email}</p>
+<p class="mt-3 text-amber-100">🎉 Semua fitur lengkap sudah terbuka sepenuhnya! Selamat belajar tanpa batas 🚀</p>
+</div>`);
+            } else {
+                alert('Silakan masuk ke akun terlebih dahulu.');
+            }
+        });
+
+        // Fungsi Tambah Pesan
+        function tambahPesanKiri(isi) {
+            const wadah = document.createElement('div');
+            wadah.className = 'flex gap-3 mb-5';
+            wadah.innerHTML = `
+                <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <i class="fa fa-graduation-cap text-sm"></i>
+                </div>
+                <div class="pesanKiri max-w-[88%]">${isi}</div>
+            `;
+            wadahObrolan.appendChild(wadah);
+            wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+        }
+
+        function tambahPesanKanan(isi) {
+            const wadah = document.createElement('div');
+            wadah.className = 'flex justify-end gap-3 mb-5';
+            wadah.innerHTML = `
+                <div class="pesanKanan max-w-[88%]">${isi}</div>
+                <div class="w-10 h-10 rounded-full bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <i class="fa fa-user text-sm"></i>
+                </div>
+            `;
+            wadahObrolan.appendChild(wadah);
+            wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+        }
+
+        tombolKirim.addEventListener('click', kirimPesan);
+        masukanPesan.addEventListener('keypress', e => {if(e.key === 'Enter') kirimPesan();});
+
+        function kirimPesan() {
+            const teks = masukanPesan.value.trim();
+            if(!teks) return;
+            tambahPesanKanan(teks);
+            masukanPesan.value = '';
+
+            setTimeout(() => {
+                if(statusPremium) {
+                    tambahPesanKiri(`<div class="kotakRumus">
+<h3 class="font-bold text-utama mb-2">📚 JAWABAN LENGKAP & MENDALAM</h3>
+<p>Sebagai pengguna Premium, saya akan memberikan penjelasan rinci, langkah demi langkah, dan contoh penerapan yang lengkap.</p>
+<p class="mt-2">Silakan sebutkan materi yang ingin dibahas lebih dalam, atau kirimkan foto soal yang ingin diselesaikan 🚀</p>
+</div>`);
+                } else {
+                    tambahPesanKiri(`<div class="kotakFitur">
+<h3 class="font-bold text-utama mb-2">ℹ️ Jawaban Dasar</h3>
+<p>Sebagai pengguna Gratis, saya bisa memberikan jawaban dasar. Untuk mendapatkan penjelasan lengkap, langkah demi langkah, dan pembahasan mendalam, silakan <strong>aktifkan Premium seharga Rp10.000,-</strong> saja sekali bayar selamanya.</p>
+<button id="beliDariJawab" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold">Beli Premium Sekarang</button>
+</div>`);
+                    setTimeout(() => document.getElementById('beliDariJawab')?.addEventListener('click', bukaLayarPremium), 100);
+                }
+            }, 900);
+        }
+
+        tombolKamera.addEventListener('click', () => {
+            if(statusPremium) {
+                tambahPesanKanan('📸 Membuka kamera...');
+                setTimeout(() => tambahPesanKiri(`✅ Kamera siap digunakan! Ambil foto soal, dan saya akan membaca serta menyelesaikannya secara otomatis 🚀`), 800);
+            } else {
+                tambahPesanKiri(`❌ Fitur Kamera & Pindai Soal hanya untuk pengguna Premium. Aktifkan sekarang hanya Rp10.000,- untuk selamanya.`);
+            }
+        });
+
+        tombolMikrofon.addEventListener('click', () => {
+            if(statusPremium) {
+                tambahPesanKanan('🎙️ Merekam suara...');
+                setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
+            } else {
+                tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
+            }
+        });
+    </script>
+</body>
+</html>
