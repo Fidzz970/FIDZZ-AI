@@ -409,6 +409,7 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
                 }
             }, 900);
         }
+        
 
         tombolKamera.addEventListener('click', () => {
             if(statusPremium) {
@@ -419,6 +420,15 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
             }
         });
 
+        
+            if(statusPremium) {
+                tambahPesanKanan('🎙️ Merekam suara...');
+                setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
+            } else {
+                tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
+
+                ...
+
         tombolMikrofon.addEventListener('click', () => {
             if(statusPremium) {
                 tambahPesanKanan('🎙️ Merekam suara...');
@@ -427,6 +437,9 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
                 tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
             }
         });
+
+        layarAkun.style.display = 'flex';
+
     </script>
 </body>
 </html>
