@@ -55,7 +55,7 @@
     </style>
 </head>
 <body class="bg-latar font-sans text-teks min-h-screen">
-    <!-- Layar Masuk / Daftar Akun Nyata -->
+    <!-- Layar Masuk / Daftar Akun - TAMPIL DULUAN -->
     <div id="layarAkun" class="layarMasuk">
         <div class="kotakMasuk">
             <div class="text-center mb-8">
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <!-- Layar Beli Premium -->
+    <!-- Layar Beli Premium - TERSUMBUNGI AWALNYA -->
     <div id="layarPremium" class="hidden layarMasuk">
         <div class="kotakMasuk">
             <div class="text-center mb-6">
@@ -307,7 +307,7 @@
                 layarAkun.style.display = 'none';
                 statusAkun.textContent = `👤 ${akunPengguna.nama}`;
                 if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
-                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi.<br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 📚`);
+                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang hari ini? 📚`);
             } else {
                 alert('Email atau kata sandi salah, atau akun belum terdaftar.');
             }
@@ -409,7 +409,6 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
                 }
             }, 900);
         }
-        
 
         tombolKamera.addEventListener('click', () => {
             if(statusPremium) {
@@ -420,24 +419,7 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
             }
         });
 
-        
-            if(statusPremium) {
-                tambahPesanKanan('🎙️ Merekam suara...');
-                setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
-            } else {
-                tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
-
-                ...
-
         tombolMikrofon.addEventListener('click', () => {
-            if(statusPremium) {
-                tambahPesanKanan('🎙️ Merekam suara...');
-                setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
-            } else {
-                tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
-
-
-                        tombolMikrofon.addEventListener('click', () => {
             if(statusPremium) {
                 tambahPesanKanan('🎙️ Merekam suara...');
                 setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
@@ -448,13 +430,10 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
 
         // Pastikan layar akun muncul duluan saat halaman siap
         window.addEventListener('DOMContentLoaded', function() {
-            layarAkun.style.display = 'flex';
-            layarPremium.classList.add('hidden');
+            layarAkun.style.display = 'flex';      // Tampilkan layar akun duluan
+            layarPremium.classList.add('hidden');  // Sembunyikan halaman Premium sepenuhnya
+            if(wadahObrolan) wadahObrolan.style.display = 'none'; // Sembunyikan obrolan sampai masuk
         });
-
     </script>
 </body>
 </html>
-
-
-            
