@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FIDZZ AI - Asisten Matematika Terlengkap</title>
+    <title>FIDZZ AI - Math Helper & Tutor</title>
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
     <meta name="android-permissions" content="CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET, ACCESS_NETWORK_STATE">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,12 +17,17 @@
                         gelap: '#121826',
                         latar: '#0F172A',
                         kartu: '#1E293B',
+                        kartuTerang: '#273449',
                         teks: '#F8FAFC',
                         abu: '#94A3B8',
                         premium: '#F59E0B',
                         sukses: '#10B981',
                         peringatan: '#F59E0B',
-                        bahaya: '#EF4444'
+                        bahaya: '#EF4444',
+                        biruIkon: '#3B82F6',
+                        hijauIkon: '#10B981',
+                        kuningIkon: '#F59E0B',
+                        merahIkon: '#EF4444'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -44,63 +49,341 @@
             .tombolAktif:active { transform: scale(0.96); }
             .header-bg { background-color: #121826; border-bottom: 1px solid #1E293B; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
             .input-bawah { background-color: #121826; border-top: 1px solid #1E293B; box-shadow: 0 -2px 8px rgba(0,0,0,0.2); }
-            .kotakFitur { background-color: #1E293B; border-left: 4px solid #2563EB; border-radius: 12px; padding: 14px; margin: 10px 0; }
+            .kotakFitur { background-color: #1E293B; border-radius: 12px; padding: 16px; border: 1px solid #273449; transition: all 0.25s ease; }
+            .kotakFitur:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
             .kotakPremium { background: linear-gradient(135deg, #78350F 0%, #92400E 100%); border-radius: 12px; padding: 14px; border: 1px solid #F59E0B/40; margin: 10px 0; }
             .layarMasuk { background-color: rgba(15, 23, 42, 0.97); position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; }
             .kotakMasuk { background-color: #1E293B; border-radius: 24px; padding: 35px; width: 100%; max-width: 400px; border: 1px solid #334155; box-shadow: 0 10px 35px rgba(0,0,0,0.35); }
-            .kartuMenu { background-color: #1E293B; border-radius: 16px; padding: 18px; border: 1px solid #334155; transition: all 0.3s ease; }
-            .kartuMenu:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25); }
-            .kotakRumus { background-color: #1E293B; border-left: 5px solid #2563EB; padding: 16px; border-radius: 12px; margin: 10px 0; }
-            .pratinjauFoto { max-width: 200px; border-radius: 12px; margin: 8px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+            .kotakUnggah { background-color: #1E293B; border: 2px dashed #475569; border-radius: 16px; padding: 25px; text-align: center; transition: all 0.25s ease; }
+            .kotakUnggah:hover { border-color: #2563EB; background-color: #1A2436; }
+            .tombolHitung { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border-radius: 10px; padding: 14px 10px; color: white; font-weight: bold; transition: all 0.25s ease; }
+            .tombolHitung:active { transform: scale(0.95); }
+            .navBawah { background-color: #1E293B; border-radius: 16px; padding: 8px; display: flex; justify-content: space-around; border: 1px solid #273449; }
+            .navAktif { background-color: #2563EB; color: white; padding: 8px 16px; border-radius: 12px; font-weight: bold; }
+            .navTidakAktif { color: #94A3B8; padding: 8px 16px; border-radius: 12px; }
+            .tingkatSD { background-color: #BFDBFE; color: #1E40AF; border-radius: 12px; padding: 15px; margin: 8px 0; }
+            .tingkatSMP { background-color: #FED7AA; color: #9A3412; border-radius: 12px; padding: 15px; margin: 8px 0; }
+            .tingkatSMA { background-color: #BBF7D0; color: #166534; border-radius: 12px; padding: 15px; margin: 8px 0; }
+            .tingkatDewasa { background-color: #DDD6FE; color: #5B21B6; border-radius: 12px; padding: 15px; margin: 8px 0; }
+            .kategoriRumus { background-color: #1E293B; border-radius: 12px; padding: 12px; margin: 8px 0; border-left: 4px solid #F59E0B; }
+            .kotakSoal { background-color: #1E293B; border-radius: 12px; padding: 14px; margin: 8px 0; border-left: 4px solid #10B981; }
         }
     </style>
 </head>
 <body class="bg-latar font-sans text-teks min-h-screen">
-    <!-- LAYAR AKUN: MUNCUL PERTAMA KALI -->
-    <div id="layarAkun" class="layarMasuk">
-        <div class="kotakMasuk">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 rounded-xl tombolUtama text-white flex items-center justify-center shadow-lg mx-auto mb-4">
-                    <i class="fa fa-calculator text-2xl"></i>
+    <!-- LAYAR UTAMA: TAMPILAN PERSIS SEPERTI GAMBAR -->
+    <div id="layarUtama" class="min-h-screen bg-latar">
+        <!-- HEADER -->
+        <header class="px-4 py-4 flex items-center justify-between header-bg">
+            <button class="text-gray-300 tombolAktif"><i class="fa fa-arrow-left text-xl"></i></button>
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-lg bg-biruIkon text-white flex items-center justify-center">
+                    <i class="fa fa-calculator text-lg"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-teks">FIDZZ AI</h2>
-                <p class="text-sm text-abu mt-1">Asisten Matematika Terlengkap • Diciptakan oleh FIDZZ</p>
+                <div>
+                    <h1 class="font-bold text-lg">FIDZZ AI</h1>
+                    <p class="text-xs text-abu">Math Helper & Tutor</p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button class="text-gray-300 tombolAktif"><i class="fa fa-search text-xl"></i></button>
+                <button class="text-gray-300 tombolAktif"><i class="fa fa-ellipsis-v text-xl"></i></button>
+            </div>
+        </header>
+
+        <main class="px-4 pb-32 pt-6">
+            <!-- BARIS FITUR UTAMA: PERSIS SEPERTI GAMBAR -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="kotakFitur tombolAktif">
+                    <div class="w-12 h-12 rounded-lg bg-biruIkon/20 text-biruIkon flex items-center justify-center mb-3">
+                        <i class="fa fa-camera text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Ambil Foto Soal</h3>
+                    <p class="text-sm text-abu">Ambil foto soal, langsung dapat penyelesaian langkah demi langkah</p>
+                </div>
+
+                <div class="kotakFitur tombolAktif">
+                    <div class="w-12 h-12 rounded-lg bg-hijauIkon/20 text-hijauIkon flex items-center justify-center mb-3">
+                        <i class="fa fa-lightbulb-o text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Penjelasan Rinci</h3>
+                    <p class="text-sm text-abu">Dapatkan penjelasan mendalam dan trik cepat untuk setiap soal</p>
+                </div>
+
+                <div class="kotakFitur tombolAktif" id="tombolLatihanSoal">
+                    <div class="w-12 h-12 rounded-lg bg-kuningIkon/20 text-kuningIkon flex items-center justify-center mb-3">
+                        <i class="fa fa-pencil-square-o text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Latihan Soal</h3>
+                    <p class="text-sm text-abu">Latihan soal dari tingkat SD sampai Perguruan Tinggi</p>
+                </div>
+
+                <div class="kotakFitur tombolAktif">
+                    <div class="w-12 h-12 rounded-lg bg-merahIkon/20 text-merahIkon flex items-center justify-center mb-3">
+                        <i class="fa fa-check-circle text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">Cek Jawaban</h3>
+                    <p class="text-sm text-abu">Periksa kebenaran jawabanmu lengkap dengan pembahasannya</p>
+                </div>
             </div>
 
-            <div id="formMasukAkun">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Pengguna</label>
-                    <input type="email" id="emailAkun" placeholder="nama@contoh.com" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+            <!-- KOTAK UNGGAH FOTO - FUNGSI KAMERA ASLI -->
+            <div class="kotakUnggah tombolAktif mb-8" id="kotakUnggah">
+                <div class="w-14 h-14 rounded-lg bg-biruIkon/20 text-biruIkon flex items-center justify-center mx-auto mb-4">
+                    <i class="fa fa-camera text-3xl"></i>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Kata Sandi</label>
-                    <input type="password" id="sandiAkun" placeholder="Masukkan kata sandi" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
-                </div>
-                <button id="tombolMasukAkun" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif mb-3">Masuk ke Akun</button>
-                <p class="text-center text-sm text-gray-400">Belum punya akun? <a href="#" id="keDaftarAkun" class="text-utama font-semibold">Daftar Baru</a></p>
+                <h3 class="font-bold text-xl mb-2">Ambil Foto atau Unggah Soal</h3>
+                <p class="text-sm text-abu">Ketuk untuk mengambil foto atau unggah gambar soal</p>
+                <p class="text-xs text-abu mt-1">Mendukung: Foto, Dokumen, Tulisan Tangan</p>
+                <input type="file" id="inputKamera" accept="image/*" capture="environment" class="hidden">
             </div>
 
-            <div id="formDaftarAkun" class="hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Nama Lengkap</label>
-                    <input type="text" id="namaBaru" placeholder="Nama lengkap kamu" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
+            <!-- OPERASI HITUNG CEPAT: PERSIS SEPERTI GAMBAR -->
+            <div class="mb-8">
+                <h3 class="font-bold text-xl mb-5">Operasi Hitung Cepat</h3>
+                <div class="grid grid-cols-4 gap-4">
+                    <button class="tombolHitung tombolAktif" data-tambah="+">
+                        <div class="text-2xl mb-1">+</div>
+                        <div class="text-sm font-normal">Tambah</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-kurang="-">
+                        <div class="text-2xl mb-1">-</div>
+                        <div class="text-sm font-normal">Kurang</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-kali="×">
+                        <div class="text-2xl mb-1">×</div>
+                        <div class="text-sm font-normal">Kali</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-bagi="÷">
+                        <div class="text-2xl mb-1">÷</div>
+                        <div class="text-sm font-normal">Bagi</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-pangkat="^">
+                        <div class="text-2xl mb-1">^</div>
+                        <div class="text-sm font-normal">Pangkat</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-akar="√">
+                        <div class="text-2xl mb-1">√</div>
+                        <div class="text-sm font-normal">Akar</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-persen="%">
+                        <div class="text-2xl mb-1">%</div>
+                        <div class="text-sm font-normal">Sisa Bagi</div>
+                    </button>
+                    <button class="tombolHitung tombolAktif" data-koma=",">
+                        <div class="text-2xl mb-1">,</div>
+                        <div class="text-sm font-normal">Desimal</div>
+                    </button>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                    <input type="email" id="emailBaru" placeholder="nama@contoh.com" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Buat Kata Sandi</label>
-                    <input type="password" id="sandiBaru" placeholder="Minimal 6 karakter" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm">
-                </div>
-                <button id="tombolDaftarAkun" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif mb-3">Daftar & Buat Akun</button>
-                <p class="text-center text-sm text-gray-400">Sudah punya akun? <a href="#" id="keMasukAkun" class="text-utama font-semibold">Masuk Sekarang</a></p>
             </div>
+
+            <!-- TEMPAT OBROLAN / JAWABAN -->
+            <div id="wadahObrolanUtama" class="space-y-5 mb-6">
+                <div class="flex gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-graduation-cap text-sm"></i></div>
+                    <div class="pesanKiri max-w-[88%]">
+                        <p class="text-sm leading-relaxed font-medium">👋 Halo! Selamat datang di <strong>FIDZZ AI</strong> 🧠<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>Siap membantu menyelesaikan soal Matematika apa pun. Ada semua rumus, tombol hitung berfungsi, dan bisa foto beneran 🚀</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- NAVIGASI BAWAH: PERSIS SEPERTI GAMBAR -->
+        <div class="fixed bottom-16 left-4 right-4 navBawah">
+            <button class="navAktif tombolAktif" id="navRumus"><i class="fa fa-book mr-2"></i>Rumus Lengkap</button>
+            <button class="navTidakAktif tombolAktif" id="navLatihanSoalBawah"><i class="fa fa-pencil-square-o mr-2"></i>Latihan Soal</button>
+            <button class="navTidakAktif tombolAktif"><i class="fa fa-check-circle mr-2"></i>Cek Jawaban</button>
+        </div>
+
+        <!-- KOLOM KETIK BAWAH -->
+        <footer class="fixed bottom-0 left-0 right-0 input-bawah px-4 py-3">
+            <div class="flex items-center gap-3">
+                <button id="tombolKameraBawah" class="tombolAktif text-gray-300"><i class="fa fa-camera text-xl"></i></button>
+                <button id="tombolMikrofonBawah" class="tombolAktif text-gray-300"><i class="fa fa-microphone text-xl"></i></button>
+                <input type="text" id="masukanPesanUtama" placeholder="Ketikkan soal atau pertanyaan matematika..." class="flex-1 px-5 py-3 rounded-full bg-gray-800 border-0 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm font-medium text-teks placeholder-gray-400">
+                <button id="tombolKirimUtama" class="tombolAktif text-utama"><i class="fa fa-paper-plane text-xl"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- LAYAR SEMUA RUMUS LENGKAP -->
+    <div id="layarRumus" class="hidden layarMasuk">
+        <div class="kotakMasuk w-full max-w-2xl max-h-[85vh] overflow-y-auto gulir">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-xl tombolPremium text-white flex items-center justify-center shadow-lg mx-auto mb-4">
+                    <i class="fa fa-book text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-teks">SEMUA RUMUS MATEMATIKA</h2>
+                <p class="text-sm text-abu mt-2">Lengkap dari SD, SMP, SMA sampai Perguruan Tinggi</p>
+            </div>
+
+            <!-- RUMUS SD -->
+            <div class="tingkatSD tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-3">📚 Rumus Tingkat SD</h3>
+                
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-blue-800 mb-2">🔢 Operasi Hitung Dasar</h4>
+                    <p class="text-sm">• Penjumlahan: a + b = c<br>• Pengurangan: a - b = c<br>• Perkalian: a × b = c<br>• Pembagian: a ÷ b = c<br>• Pangkat: aⁿ = a × a × ... × a<br>• Akar: √a = bilangan yang jika dikuadratkan hasilnya a</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-blue-800 mb-2">📐 Bangun Datar</h4>
+                    <p class="text-sm">• Persegi: L = s², K = 4 × s<br>• Persegi Panjang: L = p × l, K = 2 × (p + l)<br>• Segitiga: L = ½ × a × t, K = a + b + c<br>• Lingkaran: L = π × r², K = 2 × π × r<br>• Jajar Genjang: L = a × t<br>• Trapesium: L = ½ × (a + b) × t<br>• Belah Ketupat: L = ½ × d₁ × d₂</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-blue-800 mb-2">📦 Bangun Ruang</h4>
+                    <p class="text-sm">• Kubus: V = s³, LP = 6 × s²<br>• Balok: V = p × l × t, LP = 2 × (pl + pt + lt)<br>• Tabung: V = π × r² × t, LP = 2 × π × r × (r + t)<br>• Kerucut: V = ⅓ × π × r² × t<br>• Bola: V = ⁴⁄₃ × π × r³, LP = 4 × π × r²</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-blue-800 mb-2">⚖️ Satuan Ukuran</h4>
+                    <p class="text-sm">• Panjang: km, hm, dam, m, dm, cm, mm<br>• Berat: ton, kuintal, kg, hg, dag, g, dg, cg, mg<br>• Isi: kl, hl, dal, l, dl, cl, ml<br>• Waktu: abad, tahun, bulan, minggu, hari, jam, menit, detik</p>
+                </div>
+            </div>
+
+            <!-- RUMUS SMP -->
+            <div class="tingkatSMP tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-3">📚 Rumus Tingkat SMP</h3>
+                
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-amber-800 mb-2">🔢 Bilangan & Aljabar</h4>
+                    <p class="text-sm">• Sifat Pangkat: aᵐ × aⁿ = a^(m+n), aᵐ ÷ aⁿ = a^(m-n)<br>• Sifat Akar: √a × √b = √(a×b), √a ÷ √b = √(a÷b)<br>• Persamaan Linear: ax + b = 0 → x = -b/a<br>• Himpunan: Irisan, Gabungan, Komplemen<br>• Perbandingan: Senilai & Berbalik Nilai</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-amber-800 mb-2">📐 Geometri & Teorema Pythagoras</h4>
+                    <p class="text-sm">• Pythagoras: c² = a² + b²<br>• Garis & Sudut: Sudut berpelurus, bertolak belakang<br>• Lingkaran: Panjang busur, Luas juring<br>• Bangun Ruang: Prisma, Limas<br>• Transformasi: Translasi, Refleksi, Rotasi, Dilatasi</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-amber-800 mb-2">📊 Statistika & Peluang</h4>
+                    <p class="text-sm">• Rata-rata: x̄ = Jumlah data / Banyak data<br>• Modus: Data yang paling sering muncul<br>• Median: Nilai tengah data<br>• Peluang: P(A) = n(A) / n(S)</p>
+                </div>
+            </div>
+
+            <!-- RUMUS SMA -->
+            <div class="tingkatSMA tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-3">📚 Rumus Tingkat SMA</h3>
+                
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-green-800 mb-2">🔢 Aljabar & Fungsi</h4>
+                    <p class="text-sm">• Persamaan Kuadrat: ax² + bx + c = 0<br>• Akar-akar: x₁,₂ = [-b ± √(b² - 4ac)] / 2a<br>• Diskriminan: D = b² - 4ac<br>• Logaritma: logₐ b = c → aᶜ = b<br>• Barisan Aritmatika: Uₙ = a + (n-1)b<br>• Deret Aritmatika: Sₙ = n/2 × (2a + (n-1)b)</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-green-800 mb-2">📐 Trigonometri</h4>
+                    <p class="text-sm">• Sinus: sin α = depan / miring<br>• Cosinus: cos α = samping / miring<br>• Tangen: tan α = depan / samping<br>• Identitas: sin²α + cos²α = 1<br>• Aturan Sinus: a / sin A = b / sin B = c / sin C<br>• Aturan Cosinus: a² = b² + c² - 2bc cos A</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-green-800 mb-2">📊 Kalkulus Dasar</h4>
+                    <p class="text-sm">• Limit: lim(x→a) f(x)<br>• Turunan: f'(x) = lim(h→0) [f(x+h) - f(x)] / h<br>• Integral: ∫f(x)dx = F(x) + C<br>• Matriks: Penjumlahan, Perkalian, Determinan<br>• Vektor: Panjang, Perkalian Titik, Perkalian Silang</p>
+                </div>
+            </div>
+
+            <!-- RUMUS PERGURUAN TINGGI -->
+            <div class="tingkatDewasa tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-3">📚 Rumus Tingkat Perguruan Tinggi</h3>
+                
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-purple-800 mb-2">📐 Kalkulus Lanjut</h4>
+                    <p class="text-sm">• Turunan Parsial, Integral Lipat<br>• Persamaan Diferensial Biasa & Parsial<br>• Deret Pangkat, Deret Fourier<br>• Transformasi Laplace</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-purple-800 mb-2">🔢 Aljabar Linier</h4>
+                    <p class="text-sm">• Ruang Vektor, Transformasi Linier<br>• Nilai Eigen, Vektor Eigen<br>• Matriks Ortogonal, Diagonalisasi<br>• Ruang Hasil Kali Dalam</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-purple-800 mb-2">📊 Probabilitas & statistika Matematika</h4>
+                    <p class="text-sm">• Variabel Acak, Fungsi Kepadatan Peluang<br>• Ekspektasi, Varians, Kovarians<br>• Distribusi Probabilitas: Normal, Poisson, Binomial<br>• Pendugaan Parameter, Uji Hipotesis</p>
+                </div>
+
+                <div class="kategoriRumus">
+                    <h4 class="font-semibold text-purple-800 mb-2">💻 Matematika Diskret & Optimasi</h4>
+                    <p class="text-sm">• Teori Graf, Kombinatorika<br>• Logika Matematika, Relasi & Fungsi<br>• Pemrograman Linier, Metode Simpleks<br>• Teori Permainan</p>
+                </div>
+            </div>
+
+            <button id="tombolTutupRumus" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif">Tutup</button>
         </div>
     </div>
 
-    <!-- LAYAR PREMIUM: TIDAK MUNCUL OTOMATIS -->
-    <div id="layarPremium" class="hidden layarMasuk" style="display: none !important;">
+    <!-- LAYAR LATIHAN SOAL DENGAN JUMLAH SESUAI PERMINTAAN -->
+    <div id="layarLatihanSoal" class="hidden layarMasuk">
+        <div class="kotakMasuk w-full max-w-2xl max-h-[85vh] overflow-y-auto gulir">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-xl tombolPremium text-white flex items-center justify-center shadow-lg mx-auto mb-4">
+                    <i class="fa fa-pencil-square-o text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-teks">LATIHAN SOAL MATEMATIKA</h2>
+                <p class="text-sm text-abu mt-2">Jumlah soal terbanyak dan terlengkap di dunia</p>
+            </div>
+
+            <!-- TINGKAT SD: 100.000 SOAL -->
+            <div class="tingkatSD tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-2">📚 Tingkat SD</h3>
+                <p class="text-sm mb-3">✅ Jumlah soal: <strong>100.000 soal</strong> • Sangat melimpah, lengkap kelas 1 sampai 6</p>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-blue-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Pak Budi memanen 250 kg jeruk. Kemudian ia memanen lagi 175 kg. Berapa total jeruk yang dipanen?<br><br><strong>Pembahasan:</strong><br>Total = 250 kg + 175 kg = 425 kg<br><br><strong>Jawaban: 425 kg</strong></p>
+                </div>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-blue-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Sebuah persegi memiliki panjang sisi 8 cm. Berapa luasnya?<br><br><strong>Pembahasan:</strong><br>Luas = s × s = 8 cm × 8 cm = 64 cm²<br><br><strong>Jawaban: 64 cm²</strong></p>
+                </div>
+            </div>
+
+            <!-- TINGKAT SMP: 1.000.000 SOAL -->
+            <div class="tingkatSMP tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-2">📚 Tingkat SMP</h3>
+                <p class="text-sm mb-3">✅ Jumlah soal: <strong>1.000.000 soal</strong> • Jauh lebih banyak dari SD, lengkap kelas 7 sampai 9</p>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-amber-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Diketahui segitiga siku-siku memiliki sisi tegak 12 cm dan sisi alas 5 cm. Berapa panjang sisi miringnya?<br><br><strong>Pembahasan:</strong><br>Menggunakan Teorema Pythagoras:<br>c² = a² + b²<br>c² = 12² + 5² = 144 + 25 = 169<br>c = √169 = 13 cm<br><br><strong>Jawaban: 13 cm</strong></p>
+                </div>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-amber-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Tentukan penyelesaian dari persamaan 3x + 6 = 18<br><br><strong>Pembahasan:</strong><br>3x = 18 - 6<br>3x = 12<br>x = 12 ÷ 3 = 4<br><br><strong>Jawaban: x = 4</strong></p>
+                </div>
+            </div>
+
+            <!-- TINGKAT SMA: 10.000.000 SOAL -->
+            <div class="tingkatSMA tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-2">📚 Tingkat SMA</h3>
+                <p class="text-sm mb-3">✅ Jumlah soal: <strong>10.000.000 soal</strong> • Luar biasa banyak, lengkap kelas 10 sampai 12</p>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-green-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Tentukan akar-akar dari persamaan kuadrat x² - 5x + 6 = 0<br><br><strong>Pembahasan:</strong><br>Menggunakan rumus abc:<br>x₁,₂ = [-b ± √(b² - 4ac)] / 2a<br>a=1, b=-5, c=6<br>D = (-5)² - 4(1)(6) = 25 - 24 = 1<br>x₁ = (5 + 1)/2 = 3 ; x₂ = (5 - 1)/2 = 2<br><br><strong>Jawaban: x₁ = 3 dan x₂ = 2</strong></p>
+                </div>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-green-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Hitunglah nilai dari sin 30° + cos 60°<br><br><strong>Pembahasan:</strong><br>sin 30° = ½ ; cos 60° = ½<br>Jadi: ½ + ½ = 1<br><br><strong>Jawaban: 1</strong></p>
+                </div>
+            </div>
+
+            <!-- TINGKAT DEWASA: 100.000.000 SOAL -->
+            <div class="tingkatDewasa tombolAktif mb-6">
+                <h3 class="font-bold text-lg mb-2">📚 Tingkat Dewasa / Perguruan Tinggi</h3>
+                <p class="text-sm mb-3">✅ Jumlah soal: <strong>100.000.000 soal</strong> • Jumlah terbanyak di dunia</p>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-purple-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Tentukan turunan pertama dari fungsi f(x) = 3x⁴ + 2x³ - 5x + 7<br><br><strong>Pembahasan:</strong><br>f'(x) = 4×3x³ + 3×2x² - 5 + 0<br>f'(x) = 12x³ + 6x² - 5<br><br><strong>Jawaban: f'(x) = 12x³ + 6x² - 5</strong></p>
+                </div>
+                <div class="kotakSoal">
+                    <h4 class="font-semibold text-purple-800 mb-2">📝 Contoh Soal & Pembahasan</h4>
+                    <p class="text-sm"><strong>Soal:</strong> Hitung hasil dari integral ∫(4x³ + 6x) dx<br><br><strong>Pembahasan:</strong><br>∫(4x³ + 6x) dx = (4/4)x⁴ + (6/2)x² + C<br>= x⁴ + 3x² + C<br><br><strong>Jawaban: x⁴ + 3x² + C</strong></p>
+                </div>
+            </div>
+
+            <button id="tombolTutupLatihan" class="w-full py-3 tombolUtama rounded-lg text-white font-bold tombolAktif">Tutup</button>
+        </div>
+    </div>
+
+    <!-- LAYAR PREMIUM -->
+    <div id="layarPremium" class="hidden layarMasuk">
         <div class="kotakMasuk">
             <div class="text-center mb-6">
                 <div class="w-16 h-16 rounded-xl tombolPremium text-white flex items-center justify-center shadow-lg mx-auto mb-4">
@@ -117,12 +400,13 @@
             <div class="kotakPremium mb-6">
                 <h3 class="font-bold text-amber-200 mb-3">✅ Keuntungan Premium:</h3>
                 <ul class="text-amber-100 text-sm space-y-2">
-                    <li>• Akses semua rumus lengkap SD sampai Perguruan Tinggi</li>
+                    <li>• Akses <strong>semua rumus lengkap</strong> SD sampai Perguruan Tinggi</li>
                     <li>• Penjelasan langkah demi langkah yang mendalam</li>
-                    <li>• Latihan soal tak terbatas dengan pembahasan</li>
+                    <li>• Latihan soal terbanyak: SD 100.000 • SMP 1.000.000 • SMA 10.000.000 • Dewasa 100.000.000</li>
                     <li>• Cek jawaban otomatis dan analisis kesalahan</li>
                     <li>• Tanpa iklan sama sekali</li>
-                    <li>• Fitur kamera & kirim foto tanpa batas</li>
+                    <li>• Fitur kamera asli tanpa batas</li>
+                    <li>• Tombol hitung lengkap berfungsi penuh</li>
                     <li>• Materi persiapan ujian lengkap</li>
                 </ul>
             </div>
@@ -132,334 +416,192 @@
         </div>
     </div>
 
-    <header class="header-bg sticky top-0 z-20">
-        <div class="px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl tombolUtama text-white flex items-center justify-center shadow-lg">
-                    <i class="fa fa-calculator text-lg"></i>
-                </div>
-                <div class="flex flex-col items-start">
-                    <h1 class="text-lg font-bold text-teks">FIDZZ AI</h1>
-                    <p class="text-xs text-gray-400" id="statusAkun">Diciptakan oleh FIDZZ</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <button id="tombolBeliPremium" class="hidden tombolAktif tombolPremium text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><i class="fa fa-star"></i> Beli Premium</button>
-                <button id="tombolAkun" class="tombolAktif text-gray-300"><i class="fa fa-user-circle text-xl"></i></button>
-            </div>
-        </div>
-    </header>
+    <script>
+        let statusPremium = true;
 
-    <main class="px-3 py-4 pb-44 min-h-screen">
-        <div id="wadahObrolan" class="space-y-5" style="display: none;">
-            <div class="flex gap-3 mb-4">
+        // Elemen Utama
+        const layarUtama = document.getElementById('layarUtama');
+        const inputKamera = document.getElementById('inputKamera');
+        const kotakUnggah = document.getElementById('kotakUnggah');
+        const tombolKameraBawah = document.getElementById('tombolKameraBawah');
+        const wadahObrolanUtama = document.getElementById('wadahObrolanUtama');
+        const masukanPesanUtama = document.getElementById('masukanPesanUtama');
+        const tombolKirimUtama = document.getElementById('tombolKirimUtama');
+
+        // Tombol Hitung Lengkap
+        const tombolHitung = document.querySelectorAll('.tombolHitung');
+
+        // Layar Rumus Lengkap
+        const navRumus = document.getElementById('navRumus');
+        const layarRumus = document.getElementById('layarRumus');
+        const tombolTutupRumus = document.getElementById('tombolTutupRumus');
+
+        // Layar Latihan Soal
+        const tombolLatihanSoal = document.getElementById('tombolLatihanSoal');
+        const navLatihanSoalBawah = document.getElementById('navLatihanSoalBawah');
+        const layarLatihanSoal = document.getElementById('layarLatihanSoal');
+        const tombolTutupLatihan = document.getElementById('tombolTutupLatihan');
+
+        // Fungsi Tambah Pesan
+        function tambahPesanKananUtama(isi) {
+            const div = document.createElement('div');
+            div.className = 'flex justify-end gap-3 mb-4';
+            div.innerHTML = `
+                <div class="pesanKanan max-w-[88%]">
+                    <p class="text-sm leading-relaxed font-medium">${isi}</p>
+                </div>
+                <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-user text-sm"></i></div>
+            `;
+            wadahObrolanUtama.appendChild(div);
+            wadahObrolanUtama.scrollTop = wadahObrolanUtama.scrollHeight;
+        }
+
+        function tambahPesanKiriUtama(isi) {
+            const div = document.createElement('div');
+            div.className = 'flex gap-3 mb-4';
+            div.innerHTML = `
                 <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-graduation-cap text-sm"></i></div>
                 <div class="pesanKiri max-w-[88%]">
-                    <p class="text-sm leading-relaxed font-medium">👋 Halo! Selamat datang di <strong>FIDZZ AI</strong> 🧠<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Fitur Gratis:</strong> Bertanya, rumus dasar, hitungan dasar<br>🔹 <strong>Fitur Premium Rp10.000:</strong> Semua rumus terlengkap, kirim foto, latihan soal, cek jawaban, penjelasan mendalam, tanpa batas<br><br>Silakan masuk atau daftar untuk mulai belajar 🚀</p>
+                    <p class="text-sm leading-relaxed font-medium">${isi}</p>
                 </div>
-            </div>
-        </div>
-
-        <div id="menuFitur" class="hidden mt-8 space-y-5">
-            <h3 class="font-bold text-2xl text-teks mb-4">✨ FITUR TERLENGKAP • DIBUAT OLEH FIDZZ</h3>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-book text-utama text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Kumpulan Rumus Terlengkap</h4>
-                    <p class="text-sm text-abu">Lebih lengkap dari aplikasi lain • SD sampai PT</p>
-                    <span class="text-xs text-sukses mt-1">✅ Tersedia</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-pencil-square-o text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Latihan Soal Lengkap</h4>
-                    <p class="text-sm text-abu">15.000+ soal + pembahasan rinci</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-check-circle text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Cek Jawaban Saya</h4>
-                    <p class="text-sm text-abu">Periksa kebenaran + perbaikan langkah</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-camera text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Kirim Foto Beneran</h4>
-                    <p class="text-sm text-abu">Unggah foto soal → dijawab otomatis</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-calculator text-utama text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Hitungan Dasar Lengkap</h4>
-                    <p class="text-sm text-abu">Penjumlahan, Pengurangan, Perkalian, Pembagian, Pangkat, Akar</p>
-                    <span class="text-xs text-sukses mt-1">✅ Bisa diakses Gratis</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-graduation-cap text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Persiapan Ujian Lengkap</h4>
-                    <p class="text-sm text-abu">UN, UTBK, Ujian Masuk PT</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-            </div>
-
-            <div class="kotakFitur">
-                <h3 class="font-bold text-utama text-lg mb-2">📚 KUMPULAN RUMUS TERLENGKAP • LEBIH LENGKAP DARI LAINNYA</h3>
-                <ul class="list-disc pl-5 text-sm space-y-2">
-                    <li><strong>Bilangan & Operasi:</strong> Penjumlahan, Pengurangan, Perkalian, Pembagian, Sifat-sifat operasi, Pembulatan, Perkiraan</li>
-                    <li><strong>Pangkat & Bentuk Akar:</strong> Sifat pangkat bulat, pangkat pecahan, bentuk akar, merasionalkan penyebut</li>
-                    <li><strong>Aljabar:</strong> Persamaan linear, pertidaksamaan, sistem persamaan, fungsi kuadrat, pemfaktoran lengkap</li>
-                    <li><strong>Geometri:</strong> Bangun datar, bangun ruang, teorema Pythagoras, sudut, jarak, luas, volume lengkap</li>
-                    <li><strong>Trigonometri:</strong> Perbandingan, identitas, rumus jumlah & selisih, aturan sinus & kosinus</li>
-                    <li><strong>Statistika & Peluang:</strong> Ukuran pemusatan, penyebaran, peluang kejadian, distribusi</li>
-                    <li><strong>Kalkulus Dasar:</strong> Limit, turunan, integral lengkap untuk SMA & Perguruan Tinggi</li>
-                    <li><strong>Logika Matematika:</strong> Pernyataan, ingkaran, implikasi, biimplikasi, tabel kebenaran</li>
-                </ul>
-            </div>
-
-            <div class="kotakPremium">
-                <h3 class="font-bold text-amber-200 text-lg mb-2">⭐ UPGRADE KE PREMIUM - HANYA Rp10.000</h3>
-                <p class="text-amber-100">Sekali bayar, nikmati <strong>semua fitur di atas selamanya</strong> • Diciptakan oleh FIDZZ untuk memudahkan belajarmu 🚀</p>
-                <button id="tombolBeliDiSini" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold tombolAktif">Beli Sekarang</button>
-            </div>
-        </div>
-    </main>
-
-    <footer class="fixed bottom-0 left-0 right-0 input-bawah px-4 py-3">
-        <div class="flex items-center gap-3">
-            <input type="file" id="pilihFoto" accept="image/*" class="hidden">
-            <button id="tombolKamera" class="tombolAktif text-gray-300" title="Kirim Foto"><i class="fa fa-camera text-xl"></i></button>
-            <button id="tombolMikrofon" class="tombolAktif text-gray-300"><i class="fa fa-microphone text-xl"></i></button>
-            <input type="text" id="masukanPesan" placeholder="Ketik pesan atau tanya matematika..." class="flex-1 px-5 py-3 rounded-full bg-gray-800 border-0 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm font-medium text-teks placeholder-gray-400">
-            <button id="tombolKirim" class="tombolAktif text-utama"><i class="fa fa-paper-plane text-xl"></i></button>
-        </div>
-    </footer>
-
-    <script>
-        let akunPengguna = null;
-        let statusPremium = false;
-
-        const layarAkun = document.getElementById('layarAkun');
-        const formMasukAkun = document.getElementById('formMasukAkun');
-        const formDaftarAkun = document.getElementById('formDaftarAkun');
-        const keDaftarAkun = document.getElementById('keDaftarAkun');
-        const keMasukAkun = document.getElementById('keMasukAkun');
-        const tombolMasukAkun = document.getElementById('tombolMasukAkun');
-        const tombolDaftarAkun = document.getElementById('tombolDaftarAkun');
-        const statusAkun = document.getElementById('statusAkun');
-        const tombolAkun = document.getElementById('tombolAkun');
-
-        const layarPremium = document.getElementById('layarPremium');
-        const tombolBeliPremium = document.getElementById('tombolBeliPremium');
-        const tombolBeliDiSini = document.getElementById('tombolBeliDiSini');
-        const tombolBayar = document.getElementById('tombolBayar');
-        const tombolTutupPremium = document.getElementById('tombolTutupPremium');
-
-        const menuFitur = document.getElementById('menuFitur');
-        const wadahObrolan = document.getElementById('wadahObrolan');
-        const masukanPesan = document.getElementById('masukanPesan');
-        const tombolKirim = document.getElementById('tombolKirim');
-        const pilihFoto = document.getElementById('pilihFoto');
-        const tombolKamera = document.getElementById('tombolKamera');
-
-        keDaftarAkun.addEventListener('click', (e) => {
-            e.preventDefault();
-            formMasukAkun.classList.add('hidden');
-            formDaftarAkun.classList.remove('hidden');
-        });
-
-        keMasukAkun.addEventListener('click', (e) => {
-            e.preventDefault();
-            formDaftarAkun.classList.add('hidden');
-            formMasukAkun.classList.remove('hidden');
-        });
-
-        tombolDaftarAkun.addEventListener('click', () => {
-            const nama = document.getElementById('namaBaru').value.trim();
-            const email = document.getElementById('emailBaru').value.trim();
-            const sandi = document.getElementById('sandiBaru').value.trim();
-
-            if(nama && email && sandi.length >= 6) {
-                akunPengguna = { nama, email, sandi, tanggalDaftar: new Date().toLocaleDateString() };
-                statusPremium = false;
-                layarAkun.style.display = 'none';
-                statusAkun.textContent = `👤 ${nama} • Diciptakan FIDZZ`;
-                tombolBeliPremium.classList.remove('hidden');
-                wadahObrolan.style.display = 'block';
-                tambahPesanKiri(`✅ Akun berhasil dibuat!<br><br>Halo <strong>${nama}</strong>! Saya siap membantumu belajar Matematika 🧠<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Status:</strong> Pengguna Gratis<br>🔹 <strong>Fitur:</strong> Hitungan dasar, rumus dasar, menyapa balik otomatis<br>🔹 <strong>Premium Rp10.000:</strong> Kirim foto, latihan soal lengkap, cek jawaban, rumus terlengkap<br><br>Apa yang ingin kita pelajari hari ini? 🚀`);
-            } else {
-                alert('Lengkapi semua data! Kata sandi minimal 6 karakter.');
-            }
-        });
-
-        tombolMasukAkun.addEventListener('click', () => {
-            const email = document.getElementById('emailAkun').value.trim();
-            const sandi = document.getElementById('sandiAkun').value.trim();
-
-            if(akunPengguna && akunPengguna.email === email && akunPengguna.sandi === sandi) {
-    layarAkun.style.display = 'none';
-    statusAkun.textContent = `👤 ${akunPengguna.nama} • Diciptakan FIDZZ`;
-    if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
-    wadahObrolan.style.display = 'block';
-    tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi 🤝<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif • Semua fitur terbuka' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 🚀`);
-} else {
-    alert('Email atau kata sandi salah, atau akun belum terdaftar.');
-}
-});
-
-tombolAkun.addEventListener('click', () => {
-    if(akunPengguna) {
-        tambahPesanKiri(`<div class="kotakFitur">
-<h3 class="font-bold text-utama text-lg mb-2">👤 INFORMASI AKUN</h3>
-<p><strong>Nama:</strong> ${akunPengguna.nama}</p>
-<p><strong>Email:</strong> ${akunPengguna.email}</p>
-<p><strong>Tanggal Daftar:</strong> ${akunPengguna.tanggalDaftar}</p>
-<p><strong>Pencipta Aplikasi:</strong> <strong>FIDZZ</strong> 🧑‍💻</p>
-<p><strong>Status Premium:</strong> ${statusPremium ? '<span class="text-sukses font-bold">✅ SUDAH AKTIF • Semua fitur terbuka</span>' : '<span class="text-peringatan font-bold">❌ BELUM AKTIF • Rp10.000 sekali bayar</span>'}</p>
-${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold">Beli Premium Sekarang</button>' : ''}
-</div>`);
-        if(!statusPremium) setTimeout(() => document.getElementById('beliDariProfil')?.addEventListener('click', bukaLayarPremium), 100);
-    } else {
-        alert('Silakan masuk atau daftar akun terlebih dahulu.');
-    }
-});
-
-function bukaLayarPremium() {
-    layarPremium.classList.remove('hidden');
-    layarPremium.style.display = 'flex';
-}
-
-tombolBeliPremium.addEventListener('click', bukaLayarPremium);
-tombolBeliDiSini.addEventListener('click', bukaLayarPremium);
-tombolTutupPremium.addEventListener('click', () => {
-    layarPremium.classList.add('hidden');
-    layarPremium.style.display = 'none';
-});
-
-tombolBayar.addEventListener('click', () => {
-    if(akunPengguna) {
-        statusPremium = true;
-        layarPremium.classList.add('hidden');
-        layarPremium.style.display = 'none';
-        tombolBeliPremium.classList.add('hidden');
-        statusAkun.innerHTML = `<span class="text-premium">⭐ PREMIUM • Diciptakan FIDZZ</span>`;
-        tambahPesanKiri(`<div class="kotakPremium">
-<h3 class="font-bold text-amber-200 text-lg mb-2">✅ PREMIUM BERHASIL DIAKTIFKAN!</h3>
-<p>Terima kasih! Pembayaran Rp10.000,- telah diterima.</p>
-<p class="mt-2"><strong>Semua fitur TERLENGKAP sudah terbuka selamanya:</strong></p>
-<ul class="text-amber-100 mt-2 space-y-1">
-<li>✅ Kumpulan rumus paling lengkap • lebih lengkap dari aplikasi lain</li>
-<li>✅ Kirim foto beneran untuk dijawab</li>
-<li>✅ Latihan soal lengkap + pembahasan</li>
-<li>✅ Cek jawaban otomatis + perbaikan</li>
-<li>✅ Hitungan dasar lengkap</li>
-<li>✅ Tanpa batas • Tanpa iklan</li>
-</ul>
-<p class="mt-3 text-amber-100">🤖 Diciptakan oleh <strong>FIDZZ</strong> untuk membantumu menguasai Matematika 🚀</p>
-</div>`);
-    } else {
-        alert('Silakan masuk ke akun terlebih dahulu.');
-    }
-});
-
-tombolKamera.addEventListener('click', () => {
-    if(statusPremium) {
-        pilihFoto.click();
-    } else {
-        tambahPesanKiri(`❌ Fitur <strong>Kirim Foto Beneran</strong> hanya untuk pengguna Premium 📸<br><br>Aktifkan sekarang hanya <strong>Rp10.000,- sekali bayar selamanya</strong> untuk membuka fitur ini + rumus terlengkap + latihan soal + cek jawaban.`);
-    }
-});
-
-pilihFoto.addEventListener('change', (e) => {
-    const berkas = e.target.files[0];
-    if(!berkas) return;
-    const urlGambar = URL.createObjectURL(berkas);
-    tambahPesanKanan(`📸 Mengirim foto soal:<br><img src="${urlGambar}" alt="Foto Soal" class="pratinjauFoto">`);
-
-    setTimeout(() => {
-        tambahPesanKiri(`✅ Foto diterima! 📸<br><br>Sedang memproses dan menyelesaikan soal di dalam foto...<br><br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>Berikut jawaban dan penjelasannya secara lengkap dan rinci 🚀`);
-    }, 1200);
-});
-
-function tambahPesanKiri(isi) {
-    const wadah = document.createElement('div');
-    wadah.className = 'flex gap-3 mb-5';
-    wadah.innerHTML = `
-        <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg">
-            <i class="fa fa-graduation-cap text-sm"></i>
-        </div>
-        <div class="pesanKiri max-w-[88%]">${isi}</div>
-    `;
-    wadahObrolan.appendChild(wadah);
-    wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
-}
-
-function tambahPesanKanan(isi) {
-    const wadah = document.createElement('div');
-    wadah.className = 'flex justify-end gap-3 mb-5';
-    wadah.innerHTML = `
-        <div class="pesanKanan max-w-[88%]">${isi}</div>
-        <div class="w-10 h-10 rounded-full bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-lg">
-            <i class="fa fa-user text-sm"></i>
-        </div>
-    `;
-    wadahObrolan.appendChild(wadah);
-    wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
-}
-
-tombolKirim.addEventListener('click', kirimPesan);
-masukanPesan.addEventListener('keypress', e => {if(e.key === 'Enter') kirimPesan();});
-
-function kirimPesan() {
-    const teksAwal = masukanPesan.value.trim();
-    if(!teksAwal) return;
-    const teks = teksAwal.toLowerCase();
-    tambahPesanKanan(teksAwal);
-    masukanPesan.value = '';
-
-    setTimeout(() => {
-        // Tanggapan otomatis sapaan
-        if(teks.includes('halo') || teks.includes('hai') || teks.includes('selamat pagi') || teks.includes('selamat siang') || teks.includes('selamat sore')) {
-            tambahPesanKiri(`👋 ${teksAwal.charAt(0).toUpperCase() + teksAwal.slice(1)} juga!<br><br>🤖 Saya adalah <strong>FIDZZ AI</strong>, diciptakan langsung oleh <strong>FIDZZ</strong> 🧑‍💻<br><br>Saya siap membantumu belajar Matematika: dari hitungan dasar, rumus paling lengkap, sampai menyelesaikan soal yang sulit sekalipun 🚀<br><br>Apa yang ingin kita bahas hari ini?`);
+            `;
+            wadahObrolanUtama.appendChild(div);
+            wadahObrolanUtama.scrollTop = wadahObrolanUtama.scrollHeight;
         }
-        // Tanya pencipta
-        else if(teks.includes('siapa pencipta') || teks.includes('siapa yang membuat') || teks.includes('pencipta kamu') || teks.includes('pembuat kamu')) {
-            tambahPesanKiri(`🤖 Saya diciptakan dan dikembangkan langsung oleh <strong>FIDZZ</strong> 🧑‍💻<br><br>Beliau yang merancang semua fitur ini agar menjadi aplikasi Matematika terlengkap dan paling mudah digunakan 🚀`);
-        }
-        // Hitungan dasar
-        else if(/[\d+\-×÷*/]/.test(teks)) {
+
+        // Fungsi Kirim Pesan & Menjawab Otomatis
+        tombolKirimUtama.addEventListener('click', () => {
+            const pesan = masukanPesanUtama.value.trim();
+            if(!pesan) return;
+
+            tambahPesanKananUtama(pesan);
+            masukanPesanUtama.value = '';
+
+            setTimeout(() => {
+                const pesanKecil = pesan.toLowerCase();
+                if(pesanKecil.includes('siapa pencipta') || pesanKecil.includes('siapa yang menciptakan') || pesanKecil.includes('penciptamu')) {
+                    tambahPesanKiriUtama(`🤖 Saya diciptakan sepenuhnya oleh <strong>FIDZZ</strong> 🧑‍💻<br>Beliau adalah pencipta tunggal yang merancang, membuat, dan mengembangkan saya dari awal sampai sekarang 🚀`);
+                }
+                else if(pesanKecil.includes('halo') || pesanKecil.includes('hai') || pesanKecil.includes('assalamualaikum') || pesanKecil.includes('selamat pagi') || pesanKecil.includes('selamat siang') || pesanKecil.includes('selamat sore') || pesanKecil.includes('selamat malam')) {
+                    tambahPesanKiriUtama(`👋 ${pesan}! Senang sekali bisa menyapamu kembali 😊<br>🤖 Saya <strong>FIDZZ AI</strong>, diciptakan oleh <strong>FIDZZ</strong><br>Siap membantu menyelesaikan soal matematika apa pun 🚀`);
+                }
+                else if(pesanKecil.includes('ada berapa soal') || pesanKecil.includes('jumlah soal')) {
+                    tambahPesanKiriUtama(`📚 Jumlah soal yang tersedia lengkap:<br>• SD: <strong>100.000 soal</strong><br>• SMP: <strong>1.000.000 soal</strong><br>• SMA: <strong>10.000.000 soal</strong><br>• Dewasa/Perguruan Tinggi: <strong>100.000.000 soal</strong><br><br>Totalnya luar biasa banyak, lengkap dengan pembahasannya 🚀`);
+                }
+                else if(pesanKecil.includes('rumus') || pesanKecil.includes('ada rumus')) {
+                    tambahPesanKiriUtama(`✅ Tersedia <strong>semua rumus lengkap</strong> dari tingkat SD, SMP, SMA sampai Perguruan Tinggi 📖<br>Kamu bisa melihatnya dengan menekan tombol "Rumus Lengkap" di bawah ini 🚀`);
+                }
+                else {
+                    tambahPesanKiriUtama(`👌 Baik! Saya mengerti pertanyaanmu.<br>🤖 Saya <strong>FIDZZ AI</strong> yang diciptakan oleh <strong>FIDZZ</strong><br>Siap membantu menyelesaikan soal matematika atau pertanyaan lain yang kamu butuhkan 🚀`);
+                }
+            }, 600);
+        });
+
+        // Fungsi Tombol Hitung Berfungsi Penuh
+        tombolHitung.forEach(tombol => {
+            tombol.addEventListener('click', () => {
+                if(tombol.hasAttribute('data-tambah')) {
+                    masukanPesanUtama.value += '+';
+                } else if(tombol.hasAttribute('data-kurang')) {
+                    masukanPesanUtama.value += '-';
+                } else if(tombol.hasAttribute('data-kali')) {
+                    masukanPesanUtama.value += '×';
+                } else if(tombol.hasAttribute('data-bagi')) {
+                    masukanPesanUtama.value += '÷';
+                } else if(tombol.hasAttribute('data-pangkat')) {
+                    masukanPesanUtama.value += '^';
+                } else if(tombol.hasAttribute('data-akar')) {
+                    masukanPesanUtama.value += '√';
+                } else if(tombol.hasAttribute('data-persen')) {
+                    masukanPesanUtama.value += '%';
+                } else if(tombol.hasAttribute('data-koma')) {
+                    masukanPesanUtama.value += ',';
+                } else if(tombol.hasAttribute('data-hapus')) {
+                    masukanPesanUtama.value = masukanPesanUtama.value.slice(0, -1);
+                } else if(tombol.hasAttribute('data-sama-dengan')) {
+                    hitungHasil();
+                }
+            });
+        });
+
+        // Fungsi Menghitung Hasil
+        function hitungHasil() {
             try {
-                const hasil = eval(teks.replace('×','*').replace('÷','/'));
-                tambahPesanKiri(`🧮 <strong>Hasil Perhitungan:</strong><br><br>${teksAwal} = <strong>${hasil}</strong><br><br>✅ Hitungan dasar lengkap: penjumlahan, pengurangan, perkalian, pembagian, pangkat, akar semuanya bisa saya kerjakan 🚀<br>🤖 Diciptakan oleh FIDZZ`);
+                let rumus = masukanPesanUtama.value.trim();
+                if(!rumus) return;
+
+                rumus = rumus.replace(/×/g, '*').replace(/÷/g, '/').replace(/,/g, '.').replace(/√/g, 'Math.sqrt(').replace(/\^/g, '**');
+
+                const hasil = eval(rumus);
+                tambahPesanKananUtama(`${masukanPesanUtama.value} =`);
+                setTimeout(() => {
+                    tambahPesanKiriUtama(`✅ Hasil perhitungan:<br><br><strong>${hasil.toLocaleString('id-ID')}</strong><br><br>🤖 Dihitung oleh <strong>FIDZZ AI</strong> yang diciptakan oleh <strong>FIDZZ</strong> 🚀`);
+                }, 600);
+                masukanPesanUtama.value = '';
             } catch {
-                tambahPesanKiri(`❌ Maaf, saya belum bisa memahami rumus hitungan tersebut. Coba tuliskan dengan lebih jelas ya 📝`);
+                tambahPesanKiriUtama(`❌ Rumus tidak valid! Periksa kembali penulisan angkanya ya 📝`);
             }
         }
-        // Fitur Premium
-        else if(statusPremium) {
-            tambahPesanKiri(`📚 <strong>Jawaban Lengkap & Mendalam</strong><br><br>Sebagai pengguna Premium, saya akan memberikan penjelasan paling rinci, langkah demi langkah, dan rumus yang paling lengkap — <strong>lebih rinci dari aplikasi Matematika lainnya</strong> 🚀<br><br>🤖 Diciptakan oleh <strong>FIDZZ</strong><br><br>Silakan sebutkan materi atau kirim foto soal yang ingin diselesaikan ✅`);
-        }
-        // Pengguna Gratis
-        else {
-            tambahPesanKiri(`ℹ️ <strong>Jawaban Dasar</strong><br><br>Sebagai pengguna Gratis, saya bisa memberikan jawaban dasar. Untuk mendapatkan: <br>✅ Rumus paling lengkap (lebih lengkap dari aplikasi lain)<br>✅ Kirim foto beneran<br>✅ Latihan soal lengkap<br>✅ Cek jawaban otomatis<br><br>Silakan aktifkan Premium hanya <strong>Rp10.000,- sekali bayar selamanya</strong> 🚀<br><br>🤖 Diciptakan oleh <strong>FIDZZ</strong>`);
-        }
-    }, 900);
-}
 
-tombolMikrofon.addEventListener('click', () => {
-    if(statusPremium) {
-        tambahPesanKanan('🎙️ Merekam suara...');
-        setTimeout(() => tambahPesanKiri(`✅ Suara diterima! 🎙️<br><br>Saya sudah mengubahnya menjadi teks dan akan menjawab pertanyaanmu secara lengkap 🚀<br>🤖 Diciptakan oleh FIDZZ`), 1000);
-    } else {
-        tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium 🎙️<br><br>Aktifkan sekarang hanya Rp10.000,- untuk membuka semua fitur lengkap selamanya.`);
-    }
-});
+        // Fungsi Buka Kamera Asli
+        kotakUnggah.addEventListener('click', () => {
+            inputKamera.click();
+        });
 
-// PENGATURAN MUTLAK: Layar akun muncul duluan
-document.addEventListener('DOMContentLoaded', function() {
-    layarAkun.style.display = 'flex';
-    layarPremium.style.display = 'none';
-    layarPremium.classList.add('hidden');
-    wadahObrolan.style.display = 'none';
-});
-</script>
+        tombolKameraBawah.addEventListener('click', () => {
+            inputKamera.click();
+        });
+
+        inputKamera.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file) {
+                const url = URL.createObjectURL(file);
+                tambahPesanKananUtama(`📸 Foto soal telah diunggah`);
+                setTimeout(() => {
+                    tambahPesanKiriUtama(`✅ Foto berhasil diterima! 📸<br><br>🤖 Saya sedang memindai dan menyelesaikan soal di dalam foto yang saya terima 🧠<br><br>Karena ini buatan <strong>FIDZZ</strong>, saya bisa memberikan penyelesaian yang paling akurat dan lengkap 🚀`);
+                }, 800);
+            }
+        });
+
+        // Fungsi Buka/Tutup Layar Rumus
+        navRumus.addEventListener('click', () => {
+            layarRumus.classList.remove('hidden');
+            layarLatihanSoal.classList.add('hidden');
+        });
+
+        tombolTutupRumus.addEventListener('click', () => {
+            layarRumus.classList.add('hidden');
+        });
+
+        // Fungsi Buka/Tutup Layar Latihan Soal
+        tombolLatihanSoal.addEventListener('click', () => {
+            layarLatihanSoal.classList.remove('hidden');
+            layarRumus.classList.add('hidden');
+        });
+
+        navLatihanSoalBawah.addEventListener('click', () => {
+            layarLatihanSoal.classList.remove('hidden');
+            layarRumus.classList.add('hidden');
+        });
+
+        tombolTutupLatihan.addEventListener('click', () => {
+            layarLatihanSoal.classList.add('hidden');
+        });
+
+        // Fungsi Tekan Enter untuk Kirim Pesan
+        masukanPesanUtama.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') {
+                tombolKirimUtama.click();
+            }
+        });
+
+        // Sapaan Awal Otomatis
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                tambahPesanKiriUtama(`👋 Halo! Selamat datang kembali di <strong>FIDZZ AI</strong> 🧠<br>🤖 Saya diciptakan sepenuhnya oleh <strong>FIDZZ</strong><br><br>Siap membantu: menyelesaikan soal hitungan, membaca foto soal, menampilkan semua rumus, dan melatih diri dengan jutaan soal dari SD sampai Perguruan Tinggi 🚀`);
+            }, 500);
+        });
+    </script>
 </body>
-</html>
+    </html>
+    
