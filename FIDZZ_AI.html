@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FIDZZ AI - Asisten Matematika Lengkap</title>
+    <title>FIDZZ AI - Asisten Matematika Terlengkap</title>
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
     <meta name="android-permissions" content="CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET, ACCESS_NETWORK_STATE">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,11 +51,12 @@
             .kartuMenu { background-color: #1E293B; border-radius: 16px; padding: 18px; border: 1px solid #334155; transition: all 0.3s ease; }
             .kartuMenu:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25); }
             .kotakRumus { background-color: #1E293B; border-left: 5px solid #2563EB; padding: 16px; border-radius: 12px; margin: 10px 0; }
+            .pratinjauFoto { max-width: 200px; border-radius: 12px; margin: 8px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         }
     </style>
 </head>
 <body class="bg-latar font-sans text-teks min-h-screen">
-    <!-- LAYAR AKUN: Z-INDEX TERTINGGI, MUNCUL PERTAMA KALI -->
+    <!-- LAYAR AKUN: MUNCUL PERTAMA KALI -->
     <div id="layarAkun" class="layarMasuk">
         <div class="kotakMasuk">
             <div class="text-center mb-8">
@@ -63,7 +64,7 @@
                     <i class="fa fa-calculator text-2xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-teks">FIDZZ AI</h2>
-                <p class="text-sm text-abu mt-1">Asisten Matematika Cerdas</p>
+                <p class="text-sm text-abu mt-1">Asisten Matematika Terlengkap • Diciptakan oleh FIDZZ</p>
             </div>
 
             <div id="formMasukAkun">
@@ -98,7 +99,7 @@
         </div>
     </div>
 
-    <!-- LAYAR PREMIUM: DISOROT TOTAL DI AWAL -->
+    <!-- LAYAR PREMIUM: TIDAK MUNCUL OTOMATIS -->
     <div id="layarPremium" class="hidden layarMasuk" style="display: none !important;">
         <div class="kotakMasuk">
             <div class="text-center mb-6">
@@ -121,7 +122,7 @@
                     <li>• Latihan soal tak terbatas dengan pembahasan</li>
                     <li>• Cek jawaban otomatis dan analisis kesalahan</li>
                     <li>• Tanpa iklan sama sekali</li>
-                    <li>• Fitur kamera & mikrofon tanpa batas</li>
+                    <li>• Fitur kamera & kirim foto tanpa batas</li>
                     <li>• Materi persiapan ujian lengkap</li>
                 </ul>
             </div>
@@ -139,7 +140,7 @@
                 </div>
                 <div class="flex flex-col items-start">
                     <h1 class="text-lg font-bold text-teks">FIDZZ AI</h1>
-                    <p class="text-xs text-gray-400" id="statusAkun">Belum Masuk</p>
+                    <p class="text-xs text-gray-400" id="statusAkun">Diciptakan oleh FIDZZ</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
@@ -154,79 +155,69 @@
             <div class="flex gap-3 mb-4">
                 <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-graduation-cap text-sm"></i></div>
                 <div class="pesanKiri max-w-[88%]">
-                    <p class="text-sm leading-relaxed font-medium">👋 Halo! Selamat datang di <strong>FIDZZ AI</strong> 🧠<br><br>🔹 <strong>Fitur Gratis:</strong> Bisa bertanya, rumus dasar, latihan terbatas<br>🔹 <strong>Fitur Premium Rp10.000:</strong> Semua materi lengkap, penjelasan mendalam, tanpa batas, tanpa iklan<br><br>Silakan masuk ke akunmu atau daftar baru untuk mulai menggunakan. Apa yang ingin kamu pelajari hari ini? 🚀</p>
+                    <p class="text-sm leading-relaxed font-medium">👋 Halo! Selamat datang di <strong>FIDZZ AI</strong> 🧠<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Fitur Gratis:</strong> Bertanya, rumus dasar, hitungan dasar<br>🔹 <strong>Fitur Premium Rp10.000:</strong> Semua rumus terlengkap, kirim foto, latihan soal, cek jawaban, penjelasan mendalam, tanpa batas<br><br>Silakan masuk atau daftar untuk mulai belajar 🚀</p>
                 </div>
             </div>
         </div>
 
         <div id="menuFitur" class="hidden mt-8 space-y-5">
-            <h3 class="font-bold text-2xl text-teks mb-4">✨ FITUR LENGKAP & BERGUNA</h3>
+            <h3 class="font-bold text-2xl text-teks mb-4">✨ FITUR TERLENGKAP • DIBUAT OLEH FIDZZ</h3>
             <div class="grid grid-cols-2 gap-4">
                 <div class="kartuMenu tombolAktif">
                     <i class="fa fa-book text-utama text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Rumus Lengkap</h4>
-                    <p class="text-sm text-abu">SD, SMP, SMA, PT & Penjelasan</p>
-                    <span class="text-xs text-sukses mt-1">✅ Bisa diakses Gratis</span>
+                    <h4 class="font-bold text-lg text-teks">Kumpulan Rumus Terlengkap</h4>
+                    <p class="text-sm text-abu">Lebih lengkap dari aplikasi lain • SD sampai PT</p>
+                    <span class="text-xs text-sukses mt-1">✅ Tersedia</span>
                 </div>
                 <div class="kartuMenu tombolAktif">
                     <i class="fa fa-pencil-square-o text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Latihan Soal</h4>
-                    <p class="text-sm text-abu">12.500+ Soal & Pembahasan</p>
+                    <h4 class="font-bold text-lg text-teks">Latihan Soal Lengkap</h4>
+                    <p class="text-sm text-abu">15.000+ soal + pembahasan rinci</p>
                     <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
                 </div>
                 <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-search-plus text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Cek Jawaban</h4>
-                    <p class="text-sm text-abu">Periksa & Jelaskan Kesalahan</p>
+                    <i class="fa fa-check-circle text-premium text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Cek Jawaban Saya</h4>
+                    <p class="text-sm text-abu">Periksa kebenaran + perbaikan langkah</p>
                     <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
                 </div>
                 <div class="kartuMenu tombolAktif">
                     <i class="fa fa-camera text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Pindai Soal</h4>
-                    <p class="text-sm text-abu">Ambil Foto & Selesaikan Otomatis</p>
+                    <h4 class="font-bold text-lg text-teks">Kirim Foto Beneran</h4>
+                    <p class="text-sm text-abu">Unggah foto soal → dijawab otomatis</p>
                     <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
                 </div>
                 <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-file-text-o text-utama text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Ringkasan Materi</h4>
-                    <p class="text-sm text-abu">Poin Penting Tiap Bab</p>
-                    <span class="text-xs text-sukses mt-1">✅ Gratis</span>
+                    <i class="fa fa-calculator text-utama text-3xl mb-3"></i>
+                    <h4 class="font-bold text-lg text-teks">Hitungan Dasar Lengkap</h4>
+                    <p class="text-sm text-abu">Penjumlahan, Pengurangan, Perkalian, Pembagian, Pangkat, Akar</p>
+                    <span class="text-xs text-sukses mt-1">✅ Bisa diakses Gratis</span>
                 </div>
                 <div class="kartuMenu tombolAktif">
                     <i class="fa fa-graduation-cap text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Persiapan Ujian</h4>
+                    <h4 class="font-bold text-lg text-teks">Persiapan Ujian Lengkap</h4>
                     <p class="text-sm text-abu">UN, UTBK, Ujian Masuk PT</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-bar-chart text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Analisis Kemampuan</h4>
-                    <p class="text-sm text-abu">Lihat Kelemahan & Saran Belajar</p>
-                    <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
-                </div>
-                <div class="kartuMenu tombolAktif">
-                    <i class="fa fa-volume-up text-premium text-3xl mb-3"></i>
-                    <h4 class="font-bold text-lg text-teks">Belajar dengan Suara</h4>
-                    <p class="text-sm text-abu">Jelaskan Materi Lewat Suara</p>
                     <span class="text-xs text-premium mt-1">⭐ Khusus Premium</span>
                 </div>
             </div>
 
             <div class="kotakFitur">
-                <h3 class="font-bold text-utama text-lg mb-2">💡 Fitur Tambahan yang Sangat Berguna:</h3>
-                <ul class="list-disc pl-5 text-sm space-y-1">
-                    <li>📚 <strong>Kamus Matematika:</strong> Penjelasan istilah lengkap</li>
-                    <li>📝 <strong>Catatan Belajar:</strong> Simpan rumus & catatan pribadi</li>
-                    <li>📊 <strong>Konversi Satuan:</strong> Panjang, berat, waktu, sudut</li>
-                    <li>🧮 <strong>Alat Hitung Cepat:</strong> Persamaan, fungsi, turunan</li>
-                    <li>📖 <strong>Contoh Soal & Penyelesaian:</strong> Ribuan contoh</li>
-                    <li>🔄 <strong>Latihan Acak:</strong> Menguji pemahaman secara acak</li>
+                <h3 class="font-bold text-utama text-lg mb-2">📚 KUMPULAN RUMUS TERLENGKAP • LEBIH LENGKAP DARI LAINNYA</h3>
+                <ul class="list-disc pl-5 text-sm space-y-2">
+                    <li><strong>Bilangan & Operasi:</strong> Penjumlahan, Pengurangan, Perkalian, Pembagian, Sifat-sifat operasi, Pembulatan, Perkiraan</li>
+                    <li><strong>Pangkat & Bentuk Akar:</strong> Sifat pangkat bulat, pangkat pecahan, bentuk akar, merasionalkan penyebut</li>
+                    <li><strong>Aljabar:</strong> Persamaan linear, pertidaksamaan, sistem persamaan, fungsi kuadrat, pemfaktoran lengkap</li>
+                    <li><strong>Geometri:</strong> Bangun datar, bangun ruang, teorema Pythagoras, sudut, jarak, luas, volume lengkap</li>
+                    <li><strong>Trigonometri:</strong> Perbandingan, identitas, rumus jumlah & selisih, aturan sinus & kosinus</li>
+                    <li><strong>Statistika & Peluang:</strong> Ukuran pemusatan, penyebaran, peluang kejadian, distribusi</li>
+                    <li><strong>Kalkulus Dasar:</strong> Limit, turunan, integral lengkap untuk SMA & Perguruan Tinggi</li>
+                    <li><strong>Logika Matematika:</strong> Pernyataan, ingkaran, implikasi, biimplikasi, tabel kebenaran</li>
                 </ul>
             </div>
 
             <div class="kotakPremium">
                 <h3 class="font-bold text-amber-200 text-lg mb-2">⭐ UPGRADE KE PREMIUM - HANYA Rp10.000</h3>
-                <p class="text-amber-100">Sekali bayar, nikmati semua fitur di atas <strong>selamanya</strong> tanpa batas, tanpa iklan, dan pembaruan fitur otomatis.</p>
+                <p class="text-amber-100">Sekali bayar, nikmati <strong>semua fitur di atas selamanya</strong> • Diciptakan oleh FIDZZ untuk memudahkan belajarmu 🚀</p>
                 <button id="tombolBeliDiSini" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold tombolAktif">Beli Sekarang</button>
             </div>
         </div>
@@ -234,9 +225,10 @@
 
     <footer class="fixed bottom-0 left-0 right-0 input-bawah px-4 py-3">
         <div class="flex items-center gap-3">
-            <button id="tombolKamera" class="tombolAktif text-gray-300"><i class="fa fa-camera text-xl"></i></button>
+            <input type="file" id="pilihFoto" accept="image/*" class="hidden">
+            <button id="tombolKamera" class="tombolAktif text-gray-300" title="Kirim Foto"><i class="fa fa-camera text-xl"></i></button>
             <button id="tombolMikrofon" class="tombolAktif text-gray-300"><i class="fa fa-microphone text-xl"></i></button>
-            <input type="text" id="masukanPesan" placeholder="Ketikkan soal atau pertanyaan matematika..." class="flex-1 px-5 py-3 rounded-full bg-gray-800 border-0 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm font-medium text-teks placeholder-gray-400">
+            <input type="text" id="masukanPesan" placeholder="Ketik pesan atau tanya matematika..." class="flex-1 px-5 py-3 rounded-full bg-gray-800 border-0 focus:outline-none focus:ring-2 focus:ring-utama/40 text-sm font-medium text-teks placeholder-gray-400">
             <button id="tombolKirim" class="tombolAktif text-utama"><i class="fa fa-paper-plane text-xl"></i></button>
         </div>
     </footer>
@@ -265,6 +257,8 @@
         const wadahObrolan = document.getElementById('wadahObrolan');
         const masukanPesan = document.getElementById('masukanPesan');
         const tombolKirim = document.getElementById('tombolKirim');
+        const pilihFoto = document.getElementById('pilihFoto');
+        const tombolKamera = document.getElementById('tombolKamera');
 
         keDaftarAkun.addEventListener('click', (e) => {
             e.preventDefault();
@@ -287,10 +281,10 @@
                 akunPengguna = { nama, email, sandi, tanggalDaftar: new Date().toLocaleDateString() };
                 statusPremium = false;
                 layarAkun.style.display = 'none';
-                statusAkun.textContent = `👤 ${nama}`;
+                statusAkun.textContent = `👤 ${nama} • Diciptakan FIDZZ`;
                 tombolBeliPremium.classList.remove('hidden');
                 wadahObrolan.style.display = 'block';
-                tambahPesanKiri(`✅ Akun berhasil dibuat dan disimpan!<br><br>Halo <strong>${nama}</strong>! Kamu sekarang masuk ke akunmu.<br><br>🔹 <strong>Status Akun:</strong> Pengguna Gratis<br>🔹 <strong>Harga Upgrade Premium:</strong> Rp10.000,- sekali bayar selamanya<br><br>Ingin membuka semua fitur lengkap? Tekan tombol <strong>Beli Premium</strong> di atas! 🚀`);
+                tambahPesanKiri(`✅ Akun berhasil dibuat!<br><br>Halo <strong>${nama}</strong>! Saya siap membantumu belajar Matematika 🧠<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Status:</strong> Pengguna Gratis<br>🔹 <strong>Fitur:</strong> Hitungan dasar, rumus dasar, menyapa balik otomatis<br>🔹 <strong>Premium Rp10.000:</strong> Kirim foto, latihan soal lengkap, cek jawaban, rumus terlengkap<br><br>Apa yang ingin kita pelajari hari ini? 🚀`);
             } else {
                 alert('Lengkapi semua data! Kata sandi minimal 6 karakter.');
             }
@@ -301,141 +295,171 @@
             const sandi = document.getElementById('sandiAkun').value.trim();
 
             if(akunPengguna && akunPengguna.email === email && akunPengguna.sandi === sandi) {
-                layarAkun.style.display = 'none';
-                statusAkun.textContent = `👤 ${akunPengguna.nama}`;
-                if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
-                wadahObrolan.style.display = 'block';
-                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi.<br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 📚`);
-            } else {
-                alert('Email atau kata sandi salah, atau akun belum terdaftar.');
-            }
-        });
+    layarAkun.style.display = 'none';
+    statusAkun.textContent = `👤 ${akunPengguna.nama} • Diciptakan FIDZZ`;
+    if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
+    wadahObrolan.style.display = 'block';
+    tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi 🤝<br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif • Semua fitur terbuka' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 🚀`);
+} else {
+    alert('Email atau kata sandi salah, atau akun belum terdaftar.');
+}
+});
 
-        tombolAkun.addEventListener('click', () => {
-            if(akunPengguna) {
-                tambahPesanKiri(`<div class="kotakFitur">
-<h3 class="font-bold text-utama text-lg mb-2">👤 INFORMASI AKUN SAYA</h3>
+tombolAkun.addEventListener('click', () => {
+    if(akunPengguna) {
+        tambahPesanKiri(`<div class="kotakFitur">
+<h3 class="font-bold text-utama text-lg mb-2">👤 INFORMASI AKUN</h3>
 <p><strong>Nama:</strong> ${akunPengguna.nama}</p>
 <p><strong>Email:</strong> ${akunPengguna.email}</p>
 <p><strong>Tanggal Daftar:</strong> ${akunPengguna.tanggalDaftar}</p>
-<p><strong>Status Premium:</strong> ${statusPremium ? '<span class="text-sukses font-bold">✅ SUDAH AKTIF (Selamanya)</span>' : '<span class="text-peringatan font-bold">❌ BELUM AKTIF - Harga Rp10.000</span>'}</p>
+<p><strong>Pencipta Aplikasi:</strong> <strong>FIDZZ</strong> 🧑‍💻</p>
+<p><strong>Status Premium:</strong> ${statusPremium ? '<span class="text-sukses font-bold">✅ SUDAH AKTIF • Semua fitur terbuka</span>' : '<span class="text-peringatan font-bold">❌ BELUM AKTIF • Rp10.000 sekali bayar</span>'}</p>
 ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold">Beli Premium Sekarang</button>' : ''}
 </div>`);
-                if(!statusPremium) setTimeout(() => document.getElementById('beliDariProfil')?.addEventListener('click', bukaLayarPremium), 100);
-            } else {
-                alert('Silakan masuk atau daftar akun terlebih dahulu.');
-            }
-        });
+        if(!statusPremium) setTimeout(() => document.getElementById('beliDariProfil')?.addEventListener('click', bukaLayarPremium), 100);
+    } else {
+        alert('Silakan masuk atau daftar akun terlebih dahulu.');
+    }
+});
 
-        function bukaLayarPremium() {
-            layarPremium.classList.remove('hidden');
-            layarPremium.style.display = 'flex';
-        }
+function bukaLayarPremium() {
+    layarPremium.classList.remove('hidden');
+    layarPremium.style.display = 'flex';
+}
 
-        tombolBeliPremium.addEventListener('click', bukaLayarPremium);
-        tombolBeliDiSini.addEventListener('click', bukaLayarPremium);
-        tombolTutupPremium.addEventListener('click', () => {
-            layarPremium.classList.add('hidden');
-            layarPremium.style.display = 'none';
-        });
+tombolBeliPremium.addEventListener('click', bukaLayarPremium);
+tombolBeliDiSini.addEventListener('click', bukaLayarPremium);
+tombolTutupPremium.addEventListener('click', () => {
+    layarPremium.classList.add('hidden');
+    layarPremium.style.display = 'none';
+});
 
-        tombolBayar.addEventListener('click', () => {
-            if(akunPengguna) {
-                statusPremium = true;
-                layarPremium.classList.add('hidden');
-                layarPremium.style.display = 'none';
-                tombolBeliPremium.classList.add('hidden');
-                statusAkun.innerHTML = `<span class="text-premium">⭐ PREMIUM AKTIF</span>`;
-                tambahPesanKiri(`<div class="kotakPremium">
-<h3 class="font-bold text-amber-200 text-lg mb-2">✅ PEMBELIAN BERHASIL!</h3>
-<p>Terima kasih! Pembayaran sebesar <strong>Rp10.000,-</strong> telah diterima.</p>
-<p class="mt-2"><strong>Status Premium AKTIF SELAMANYA</strong> untuk akun:</p>
-<p class="font-bold">${akunPengguna.email}</p>
-<p class="mt-3 text-amber-100">🎉 Semua fitur lengkap sudah terbuka sepenuhnya! Selamat belajar tanpa batas 🚀</p>
+tombolBayar.addEventListener('click', () => {
+    if(akunPengguna) {
+        statusPremium = true;
+        layarPremium.classList.add('hidden');
+        layarPremium.style.display = 'none';
+        tombolBeliPremium.classList.add('hidden');
+        statusAkun.innerHTML = `<span class="text-premium">⭐ PREMIUM • Diciptakan FIDZZ</span>`;
+        tambahPesanKiri(`<div class="kotakPremium">
+<h3 class="font-bold text-amber-200 text-lg mb-2">✅ PREMIUM BERHASIL DIAKTIFKAN!</h3>
+<p>Terima kasih! Pembayaran Rp10.000,- telah diterima.</p>
+<p class="mt-2"><strong>Semua fitur TERLENGKAP sudah terbuka selamanya:</strong></p>
+<ul class="text-amber-100 mt-2 space-y-1">
+<li>✅ Kumpulan rumus paling lengkap • lebih lengkap dari aplikasi lain</li>
+<li>✅ Kirim foto beneran untuk dijawab</li>
+<li>✅ Latihan soal lengkap + pembahasan</li>
+<li>✅ Cek jawaban otomatis + perbaikan</li>
+<li>✅ Hitungan dasar lengkap</li>
+<li>✅ Tanpa batas • Tanpa iklan</li>
+</ul>
+<p class="mt-3 text-amber-100">🤖 Diciptakan oleh <strong>FIDZZ</strong> untuk membantumu menguasai Matematika 🚀</p>
 </div>`);
-            } else {
-                alert('Silakan masuk ke akun terlebih dahulu.');
-            }
-        });
+    } else {
+        alert('Silakan masuk ke akun terlebih dahulu.');
+    }
+});
 
-        function tambahPesanKiri(isi) {
-            const wadah = document.createElement('div');
-            wadah.className = 'flex gap-3 mb-5';
-            wadah.innerHTML = `
-                <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <i class="fa fa-graduation-cap text-sm"></i>
-                </div>
-                <div class="pesanKiri max-w-[88%]">${isi}</div>
-            `;
-            wadahObrolan.appendChild(wadah);
-            wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+tombolKamera.addEventListener('click', () => {
+    if(statusPremium) {
+        pilihFoto.click();
+    } else {
+        tambahPesanKiri(`❌ Fitur <strong>Kirim Foto Beneran</strong> hanya untuk pengguna Premium 📸<br><br>Aktifkan sekarang hanya <strong>Rp10.000,- sekali bayar selamanya</strong> untuk membuka fitur ini + rumus terlengkap + latihan soal + cek jawaban.`);
+    }
+});
+
+pilihFoto.addEventListener('change', (e) => {
+    const berkas = e.target.files[0];
+    if(!berkas) return;
+    const urlGambar = URL.createObjectURL(berkas);
+    tambahPesanKanan(`📸 Mengirim foto soal:<br><img src="${urlGambar}" alt="Foto Soal" class="pratinjauFoto">`);
+
+    setTimeout(() => {
+        tambahPesanKiri(`✅ Foto diterima! 📸<br><br>Sedang memproses dan menyelesaikan soal di dalam foto...<br><br>🤖 Saya diciptakan oleh <strong>FIDZZ</strong><br><br>Berikut jawaban dan penjelasannya secara lengkap dan rinci 🚀`);
+    }, 1200);
+});
+
+function tambahPesanKiri(isi) {
+    const wadah = document.createElement('div');
+    wadah.className = 'flex gap-3 mb-5';
+    wadah.innerHTML = `
+        <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg">
+            <i class="fa fa-graduation-cap text-sm"></i>
+        </div>
+        <div class="pesanKiri max-w-[88%]">${isi}</div>
+    `;
+    wadahObrolan.appendChild(wadah);
+    wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+}
+
+function tambahPesanKanan(isi) {
+    const wadah = document.createElement('div');
+    wadah.className = 'flex justify-end gap-3 mb-5';
+    wadah.innerHTML = `
+        <div class="pesanKanan max-w-[88%]">${isi}</div>
+        <div class="w-10 h-10 rounded-full bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-lg">
+            <i class="fa fa-user text-sm"></i>
+        </div>
+    `;
+    wadahObrolan.appendChild(wadah);
+    wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+}
+
+tombolKirim.addEventListener('click', kirimPesan);
+masukanPesan.addEventListener('keypress', e => {if(e.key === 'Enter') kirimPesan();});
+
+function kirimPesan() {
+    const teksAwal = masukanPesan.value.trim();
+    if(!teksAwal) return;
+    const teks = teksAwal.toLowerCase();
+    tambahPesanKanan(teksAwal);
+    masukanPesan.value = '';
+
+    setTimeout(() => {
+        // Tanggapan otomatis sapaan
+        if(teks.includes('halo') || teks.includes('hai') || teks.includes('selamat pagi') || teks.includes('selamat siang') || teks.includes('selamat sore')) {
+            tambahPesanKiri(`👋 ${teksAwal.charAt(0).toUpperCase() + teksAwal.slice(1)} juga!<br><br>🤖 Saya adalah <strong>FIDZZ AI</strong>, diciptakan langsung oleh <strong>FIDZZ</strong> 🧑‍💻<br><br>Saya siap membantumu belajar Matematika: dari hitungan dasar, rumus paling lengkap, sampai menyelesaikan soal yang sulit sekalipun 🚀<br><br>Apa yang ingin kita bahas hari ini?`);
         }
-
-        function tambahPesanKanan(isi) {
-            const wadah = document.createElement('div');
-            wadah.className = 'flex justify-end gap-3 mb-5';
-            wadah.innerHTML = `
-                <div class="pesanKanan max-w-[88%]">${isi}</div>
-                <div class="w-10 h-10 rounded-full bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <i class="fa fa-user text-sm"></i>
-                </div>
-            `;
-            wadahObrolan.appendChild(wadah);
-            wadahObrolan.scrollTop = wadahObrolan.scrollHeight;
+        // Tanya pencipta
+        else if(teks.includes('siapa pencipta') || teks.includes('siapa yang membuat') || teks.includes('pencipta kamu') || teks.includes('pembuat kamu')) {
+            tambahPesanKiri(`🤖 Saya diciptakan dan dikembangkan langsung oleh <strong>FIDZZ</strong> 🧑‍💻<br><br>Beliau yang merancang semua fitur ini agar menjadi aplikasi Matematika terlengkap dan paling mudah digunakan 🚀`);
         }
-
-        tombolKirim.addEventListener('click', kirimPesan);
-        masukanPesan.addEventListener('keypress', e => {if(e.key === 'Enter') kirimPesan();});
-
-        function kirimPesan() {
-            const teks = masukanPesan.value.trim();
-            if(!teks) return;
-            tambahPesanKanan(teks);
-            masukanPesan.value = '';
-
-            setTimeout(() => {
-                if(statusPremium) {
-                    tambahPesanKiri(`<div class="kotakRumus">
-<h3 class="font-bold text-utama mb-2">📚 JAWABAN LENGKAP & MENDALAM</h3>
-<p>Sebagai pengguna Premium, saya akan memberikan penjelasan rinci, langkah demi langkah, dan contoh penerapan yang lengkap.</p>
-<p class="mt-2">Silakan sebutkan materi yang ingin dibahas lebih dalam, atau kirimkan foto soal yang ingin diselesaikan 🚀</p>
-</div>`);
-                } else {
-                    tambahPesanKiri(`<div class="kotakFitur">
-<h3 class="font-bold text-utama mb-2">ℹ️ Jawaban Dasar</h3>
-<p>Sebagai pengguna Gratis, saya bisa memberikan jawaban dasar. Untuk mendapatkan penjelasan lengkap, langkah demi langkah, dan pembahasan mendalam, silakan <strong>aktifkan Premium seharga Rp10.000,-</strong> saja sekali bayar selamanya.</p>
-<button id="beliDariJawab" class="mt-3 w-full py-2 tombolPremium rounded-lg text-white font-bold">Beli Premium Sekarang</button>
-</div>`);
-                    setTimeout(() => document.getElementById('beliDariJawab')?.addEventListener('click', bukaLayarPremium), 100);
-                }
-            }, 900);
+        // Hitungan dasar
+        else if(/[\d+\-×÷*/]/.test(teks)) {
+            try {
+                const hasil = eval(teks.replace('×','*').replace('÷','/'));
+                tambahPesanKiri(`🧮 <strong>Hasil Perhitungan:</strong><br><br>${teksAwal} = <strong>${hasil}</strong><br><br>✅ Hitungan dasar lengkap: penjumlahan, pengurangan, perkalian, pembagian, pangkat, akar semuanya bisa saya kerjakan 🚀<br>🤖 Diciptakan oleh FIDZZ`);
+            } catch {
+                tambahPesanKiri(`❌ Maaf, saya belum bisa memahami rumus hitungan tersebut. Coba tuliskan dengan lebih jelas ya 📝`);
+            }
         }
+        // Fitur Premium
+        else if(statusPremium) {
+            tambahPesanKiri(`📚 <strong>Jawaban Lengkap & Mendalam</strong><br><br>Sebagai pengguna Premium, saya akan memberikan penjelasan paling rinci, langkah demi langkah, dan rumus yang paling lengkap — <strong>lebih rinci dari aplikasi Matematika lainnya</strong> 🚀<br><br>🤖 Diciptakan oleh <strong>FIDZZ</strong><br><br>Silakan sebutkan materi atau kirim foto soal yang ingin diselesaikan ✅`);
+        }
+        // Pengguna Gratis
+        else {
+            tambahPesanKiri(`ℹ️ <strong>Jawaban Dasar</strong><br><br>Sebagai pengguna Gratis, saya bisa memberikan jawaban dasar. Untuk mendapatkan: <br>✅ Rumus paling lengkap (lebih lengkap dari aplikasi lain)<br>✅ Kirim foto beneran<br>✅ Latihan soal lengkap<br>✅ Cek jawaban otomatis<br><br>Silakan aktifkan Premium hanya <strong>Rp10.000,- sekali bayar selamanya</strong> 🚀<br><br>🤖 Diciptakan oleh <strong>FIDZZ</strong>`);
+        }
+    }, 900);
+}
 
-        tombolKamera.addEventListener('click', () => {
-            if(statusPremium) {
-                tambahPesanKanan('📸 Membuka kamera...');
-                setTimeout(() => tambahPesanKiri(`✅ Kamera siap digunakan! Ambil foto soal, dan saya akan membaca serta menyelesaikannya secara otomatis 🚀`), 800);
-            } else {
-                tambahPesanKiri(`❌ Fitur Kamera & Pindai Soal hanya untuk pengguna Premium. Aktifkan sekarang hanya Rp10.000,- untuk selamanya.`);
-            }
-        });
+tombolMikrofon.addEventListener('click', () => {
+    if(statusPremium) {
+        tambahPesanKanan('🎙️ Merekam suara...');
+        setTimeout(() => tambahPesanKiri(`✅ Suara diterima! 🎙️<br><br>Saya sudah mengubahnya menjadi teks dan akan menjawab pertanyaanmu secara lengkap 🚀<br>🤖 Diciptakan oleh FIDZZ`), 1000);
+    } else {
+        tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium 🎙️<br><br>Aktifkan sekarang hanya Rp10.000,- untuk membuka semua fitur lengkap selamanya.`);
+    }
+});
 
-        tombolMikrofon.addEventListener('click', () => {
-            if(statusPremium) {
-                tambahPesanKanan('🎙️ Merekam suara...');
-                setTimeout(() => tambahPesanKiri(`✅ Suara diterima! Saya akan mengubahnya menjadi teks dan menjawab pertanyaanmu 🎙️`), 1000);
-            } else {
-                tambahPesanKiri(`❌ Fitur Suara hanya tersedia untuk pengguna Premium. Hanya Rp10.000,- untuk semua fitur selamanya.`);
-            }
-        });
-
-        // PENGATURAN MUTLAK: Layar akun muncul duluan, Premium disembunyikan total
-        document.addEventListener('DOMContentLoaded', function() {
-            layarAkun.style.display = 'flex';      // Tampilkan akun
-            layarPremium.style.display = 'none';    // Sembunyikan Premium
-            layarPremium.classList.add('hidden');
-            wadahObrolan.style.display = 'none';    // Sembunyikan obrolan
-        });
-    </script>
+// PENGATURAN MUTLAK: Layar akun muncul duluan
+document.addEventListener('DOMContentLoaded', function() {
+    layarAkun.style.display = 'flex';
+    layarPremium.style.display = 'none';
+    layarPremium.classList.add('hidden');
+    wadahObrolan.style.display = 'none';
+});
+</script>
 </body>
 </html>
