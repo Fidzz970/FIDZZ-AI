@@ -46,7 +46,7 @@
             .input-bawah { background-color: #121826; border-top: 1px solid #1E293B; box-shadow: 0 -2px 8px rgba(0,0,0,0.2); }
             .kotakFitur { background-color: #1E293B; border-left: 4px solid #2563EB; border-radius: 12px; padding: 14px; margin: 10px 0; }
             .kotakPremium { background: linear-gradient(135deg, #78350F 0%, #92400E 100%); border-radius: 12px; padding: 14px; border: 1px solid #F59E0B/40; margin: 10px 0; }
-            .layarMasuk { background-color: rgba(15, 23, 42, 0.97); position: fixed; inset: 0; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 20px; }
+            .layarMasuk { background-color: rgba(15, 23, 42, 0.97); position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; }
             .kotakMasuk { background-color: #1E293B; border-radius: 24px; padding: 35px; width: 100%; max-width: 400px; border: 1px solid #334155; box-shadow: 0 10px 35px rgba(0,0,0,0.35); }
             .kartuMenu { background-color: #1E293B; border-radius: 16px; padding: 18px; border: 1px solid #334155; transition: all 0.3s ease; }
             .kartuMenu:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25); }
@@ -55,7 +55,7 @@
     </style>
 </head>
 <body class="bg-latar font-sans text-teks min-h-screen">
-    <!-- Layar Masuk / Daftar Akun - TAMPIL DULUAN -->
+    <!-- LAYAR AKUN: Z-INDEX TERTINGGI, MUNCUL PERTAMA KALI -->
     <div id="layarAkun" class="layarMasuk">
         <div class="kotakMasuk">
             <div class="text-center mb-8">
@@ -98,8 +98,8 @@
         </div>
     </div>
 
-    <!-- Layar Beli Premium - TERSUMBUNGI AWALNYA -->
-    <div id="layarPremium" class="hidden layarMasuk">
+    <!-- LAYAR PREMIUM: DISOROT TOTAL DI AWAL -->
+    <div id="layarPremium" class="hidden layarMasuk" style="display: none !important;">
         <div class="kotakMasuk">
             <div class="text-center mb-6">
                 <div class="w-16 h-16 rounded-xl tombolPremium text-white flex items-center justify-center shadow-lg mx-auto mb-4">
@@ -150,7 +150,7 @@
     </header>
 
     <main class="px-3 py-4 pb-44 min-h-screen">
-        <div id="wadahObrolan" class="space-y-5">
+        <div id="wadahObrolan" class="space-y-5" style="display: none;">
             <div class="flex gap-3 mb-4">
                 <div class="w-10 h-10 rounded-full tombolUtama text-white flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fa fa-graduation-cap text-sm"></i></div>
                 <div class="pesanKiri max-w-[88%]">
@@ -159,7 +159,6 @@
             </div>
         </div>
 
-        <!-- Menu Fitur Lengkap Baru -->
         <div id="menuFitur" class="hidden mt-8 space-y-5">
             <h3 class="font-bold text-2xl text-teks mb-4">✨ FITUR LENGKAP & BERGUNA</h3>
             <div class="grid grid-cols-2 gap-4">
@@ -243,7 +242,6 @@
     </footer>
 
     <script>
-        // Data Akun & Status Premium
         let akunPengguna = null;
         let statusPremium = false;
 
@@ -268,7 +266,6 @@
         const masukanPesan = document.getElementById('masukanPesan');
         const tombolKirim = document.getElementById('tombolKirim');
 
-        // Sistem Akun Nyata
         keDaftarAkun.addEventListener('click', (e) => {
             e.preventDefault();
             formMasukAkun.classList.add('hidden');
@@ -292,6 +289,7 @@
                 layarAkun.style.display = 'none';
                 statusAkun.textContent = `👤 ${nama}`;
                 tombolBeliPremium.classList.remove('hidden');
+                wadahObrolan.style.display = 'block';
                 tambahPesanKiri(`✅ Akun berhasil dibuat dan disimpan!<br><br>Halo <strong>${nama}</strong>! Kamu sekarang masuk ke akunmu.<br><br>🔹 <strong>Status Akun:</strong> Pengguna Gratis<br>🔹 <strong>Harga Upgrade Premium:</strong> Rp10.000,- sekali bayar selamanya<br><br>Ingin membuka semua fitur lengkap? Tekan tombol <strong>Beli Premium</strong> di atas! 🚀`);
             } else {
                 alert('Lengkapi semua data! Kata sandi minimal 6 karakter.');
@@ -302,12 +300,12 @@
             const email = document.getElementById('emailAkun').value.trim();
             const sandi = document.getElementById('sandiAkun').value.trim();
 
-            // Cek akun yang sudah disimpan
             if(akunPengguna && akunPengguna.email === email && akunPengguna.sandi === sandi) {
                 layarAkun.style.display = 'none';
                 statusAkun.textContent = `👤 ${akunPengguna.nama}`;
                 if(!statusPremium) tombolBeliPremium.classList.remove('hidden');
-                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang hari ini? 📚`);
+                wadahObrolan.style.display = 'block';
+                tambahPesanKiri(`✅ Berhasil masuk kembali!<br><br>Halo <strong>${akunPengguna.nama}</strong>! Senang bertemu lagi.<br><br>🔹 <strong>Status:</strong> ${statusPremium ? '⭐ Premium Aktif' : 'Pengguna Gratis'}<br><br>Apa yang ingin kita pelajari hari ini? 📚`);
             } else {
                 alert('Email atau kata sandi salah, atau akun belum terdaftar.');
             }
@@ -329,19 +327,23 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
             }
         });
 
-        // Sistem Beli Premium Rp10.000
         function bukaLayarPremium() {
             layarPremium.classList.remove('hidden');
+            layarPremium.style.display = 'flex';
         }
 
         tombolBeliPremium.addEventListener('click', bukaLayarPremium);
         tombolBeliDiSini.addEventListener('click', bukaLayarPremium);
-        tombolTutupPremium.addEventListener('click', () => layarPremium.classList.add('hidden'));
+        tombolTutupPremium.addEventListener('click', () => {
+            layarPremium.classList.add('hidden');
+            layarPremium.style.display = 'none';
+        });
 
         tombolBayar.addEventListener('click', () => {
             if(akunPengguna) {
                 statusPremium = true;
                 layarPremium.classList.add('hidden');
+                layarPremium.style.display = 'none';
                 tombolBeliPremium.classList.add('hidden');
                 statusAkun.innerHTML = `<span class="text-premium">⭐ PREMIUM AKTIF</span>`;
                 tambahPesanKiri(`<div class="kotakPremium">
@@ -356,7 +358,6 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
             }
         });
 
-        // Fungsi Tambah Pesan
         function tambahPesanKiri(isi) {
             const wadah = document.createElement('div');
             wadah.className = 'flex gap-3 mb-5';
@@ -428,11 +429,12 @@ ${!statusPremium ? '<button id="beliDariProfil" class="mt-3 w-full py-2 tombolPr
             }
         });
 
-        // Pastikan layar akun muncul duluan saat halaman siap
-        window.addEventListener('DOMContentLoaded', function() {
-            layarAkun.style.display = 'flex';      // Tampilkan layar akun duluan
-            layarPremium.classList.add('hidden');  // Sembunyikan halaman Premium sepenuhnya
-            if(wadahObrolan) wadahObrolan.style.display = 'none'; // Sembunyikan obrolan sampai masuk
+        // PENGATURAN MUTLAK: Layar akun muncul duluan, Premium disembunyikan total
+        document.addEventListener('DOMContentLoaded', function() {
+            layarAkun.style.display = 'flex';      // Tampilkan akun
+            layarPremium.style.display = 'none';    // Sembunyikan Premium
+            layarPremium.classList.add('hidden');
+            wadahObrolan.style.display = 'none';    // Sembunyikan obrolan
         });
     </script>
 </body>
